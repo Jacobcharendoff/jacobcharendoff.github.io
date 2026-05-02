@@ -138,7 +138,7 @@ body {
 }
 .depth-prompt.expanded .arrow { transform: rotate(180deg); }
 
-/* -- DETAIL VIEW (depth layer) -- */
+/* ── DETAIL VIEW (depth layer) ── */
 .detail {
   width: 100%; max-width: 700px;
   margin-top: 24px;
@@ -186,7 +186,7 @@ body {
   letter-spacing: 0.5px; margin-top: 2px;
 }
 
-/* -- CTA ROW -- */
+/* ── CTA ROW ── */
 .cta-row { display: flex; gap: 16px; margin-top: 24px; }
 .cta-pill {
   font-size: 14px; font-weight: 500; text-decoration: none;
@@ -196,7 +196,7 @@ body {
 .cta-primary:hover { opacity: 0.85; }
 .cta-ghost { color: var(--accent); border: 1px solid; background: transparent; }
 
-/* -- CHAPTER INTERSTITIAL -- */
+/* ── CHAPTER INTERSTITIAL ── */
 .interstitial-num {
   font-size: 11px; font-weight: 700; letter-spacing: 2px;
   margin-bottom: 12px;
@@ -411,23 +411,26 @@ body {
   transition: background 0.6s ease;
 }
 
-.chapter-dots { display: flex; gap: 6px; align-items: center; }
+.chapter-dots { display: flex; gap: 4px; align-items: center; }
 .chapter-dot {
-  width: 6px; height: 6px; border-radius: 50%;
-  background: var(--faint); cursor: pointer;
+  font-size: 10px; font-weight: 500; letter-spacing: 0.3px;
+  color: var(--faint); cursor: pointer;
+  padding: 4px 8px; border-radius: 980px;
   transition: all 0.3s ease;
+  white-space: nowrap;
 }
-.chapter-dot.active { width: 20px; border-radius: 3px; }
+.chapter-dot:hover { color: var(--dim); }
+.chapter-dot.active { color: var(--text); background: rgba(255,255,255,0.08); font-weight: 600; }
 .dot-divider {
   width: 1px; height: 12px; background: var(--faint);
-  margin: 0 4px; opacity: 0.4;
+  margin: 0 2px; opacity: 0.4;
 }
 
 .nav-hint {
   font-size: 10px; color: var(--faint); letter-spacing: 0.5px;
 }
 
-/* -- MOBILE -- */
+/* ── MOBILE ── */
 @media (max-width: 700px) {
   .stage { padding: 56px 24px 16px; }
   .top, .bottom { padding-left: 24px; padding-right: 24px; }
@@ -437,6 +440,8 @@ body {
   .cta-pill { text-align: center; }
   .detail-ba { gap: 16px; }
   .chat-container { width: calc(100% - 48px); }
+  .chapter-dots { gap: 2px; flex-wrap: wrap; justify-content: center; }
+  .chapter-dot { font-size: 9px; padding: 3px 6px; }
 }
 </style>
 </head>
@@ -495,14 +500,13 @@ body {
 </div>
 
 <script>
-// Right arrow character for use in metrics
-var RIGHT_ARROW = String.fromCharCode(8594);
-
 // ══════════════════════════════════════
 // SLIDE DATA
 // ══════════════════════════════════════
+var RIGHT_ARROW = String.fromCharCode(8594);
+
 var slides = [
-  // -- INTRO --
+  // ── INTRO ──
   {
     type: 'intro',
     eyebrow: 'Revenue & Growth Operator',
@@ -520,7 +524,7 @@ var slides = [
     group: 0
   },
 
-  // -- CHAPTER 1 INTERSTITIAL --
+  // ── CHAPTER 1 INTERSTITIAL ──
   {
     type: 'chapter',
     eyebrow: 'CHAPTER 01',
@@ -533,7 +537,7 @@ var slides = [
     group: 1
   },
 
-  // -- BERMAN --
+  // ── BERMAN ──
   {
     type: 'company',
     eyebrow: '2014 - 2022 / 8 Years',
@@ -562,7 +566,7 @@ var slides = [
     }
   },
 
-  // -- TRD --
+  // ── TRD ──
   {
     type: 'company',
     eyebrow: '2019 - 2023 / Founded',
@@ -591,7 +595,7 @@ var slides = [
     }
   },
 
-  // -- CHAPTER 2 INTERSTITIAL --
+  // ── CHAPTER 2 INTERSTITIAL ──
   {
     type: 'chapter',
     eyebrow: 'CHAPTER 02',
@@ -604,7 +608,7 @@ var slides = [
     group: 2
   },
 
-  // -- VERIFAST --
+  // ── VERIFAST ──
   {
     type: 'company',
     eyebrow: '2025 - 2026 / $36M ARR SaaS',
@@ -633,7 +637,7 @@ var slides = [
     }
   },
 
-  // -- CNIB --
+  // ── CNIB ──
   {
     type: 'company',
     eyebrow: '2024 - Present / Pro Bono',
@@ -658,7 +662,7 @@ var slides = [
     }
   },
 
-  // -- EVERLABS --
+  // ── EVERLABS ──
   {
     type: 'company',
     eyebrow: '2023 / Health Tech',
@@ -682,7 +686,7 @@ var slides = [
     }
   },
 
-  // -- CHAT (replaces old contact slide) --
+  // ── CHAT (replaces old contact slide) ──
   {
     type: 'chat',
     eyebrow: '', headline: '', role: '', desc: '',
@@ -692,6 +696,8 @@ var slides = [
     group: 3
   }
 ];
+
+var CONNECT_TEXT = "Let's connect " + RIGHT_ARROW;
 
 // ══════════════════════════════════════
 // CHAT CONVERSATION TREE
@@ -710,7 +716,7 @@ var chatTree = {
     options: [
       { text: "What would your first 90 days look like?", next: 'ninety_days' },
       { text: "Tell me about a time it didn't work", next: 'failure' },
-      { text: "Let's connect →", next: 'contact' }
+      { text: CONNECT_TEXT, next: 'contact' }
     ]
   },
   ninety_days: {
@@ -718,7 +724,7 @@ var chatTree = {
     options: [
       { text: "What's your management style?", next: 'management' },
       { text: "Why you over someone else?", next: 'why_you' },
-      { text: "Let's connect →", next: 'contact' }
+      { text: CONNECT_TEXT, next: 'contact' }
     ]
   },
   why_you: {
@@ -726,28 +732,28 @@ var chatTree = {
     options: [
       { text: "Tell me about a failure", next: 'failure' },
       { text: "What kind of company fits you best?", next: 'company_fit' },
-      { text: "Let's connect →", next: 'contact' }
+      { text: CONNECT_TEXT, next: 'contact' }
     ]
   },
   failure: {
     jacob: "The Rig Doctor. I held on six months too long before selling. I was emotionally attached to something I'd built and it cost me margin on the exit. Still got 4x EBITDA, but I left money on the table because I couldn't separate the founder from the operator. That's the lesson I carry now. The numbers tell you when to move. Listen to them.",
     options: [
       { text: "What's your management style?", next: 'management' },
-      { text: "Let's connect →", next: 'contact' }
+      { text: CONNECT_TEXT, next: 'contact' }
     ]
   },
   management: {
     jacob: "I hire people who are better than me at their specific thing. Give them the system, the targets, and the room to run. I set the commercial architecture and the cadence, make sure the data is clean, and get out of the way. When something breaks I'm in the weeds until it's fixed. Otherwise I'm building the next thing.",
     options: [
       { text: "What kind of company fits you?", next: 'company_fit' },
-      { text: "Let's connect →", next: 'contact' }
+      { text: CONNECT_TEXT, next: 'contact' }
     ]
   },
   company_fit: {
     jacob: "Somewhere between 'figured out the product' and 'figured out how to sell it.' That gap is where I live. I need a founder or exec team that knows they need commercial infrastructure but hasn't built it yet. Not a turnaround. A build.",
     options: [
       { text: "What would your first 90 days look like?", next: 'ninety_days' },
-      { text: "Let's connect →", next: 'contact' }
+      { text: CONNECT_TEXT, next: 'contact' }
     ]
   },
   contact: {
@@ -803,7 +809,7 @@ slides.forEach(function(s, i) {
   lastGroup = s.group;
   var dot = document.createElement('div');
   dot.className = 'chapter-dot';
-  dot.title = s.label;
+  dot.textContent = s.label;
   dot.dataset.index = i;
   dot.addEventListener('click', function() { goTo(i); });
   chapterDots.appendChild(dot);
@@ -842,23 +848,19 @@ function render(index, animate) {
     fillContent(s);
   }
 
-  // Progress
   var pct = (index / (slides.length - 1)) * 100;
   progressFill.style.width = pct + '%';
   progressFill.style.background = s.color;
   progressDot.style.background = s.color;
 
-  // Dots
   document.querySelectorAll('.chapter-dot').forEach(function(d) {
     var di = parseInt(d.dataset.index);
     d.classList.toggle('active', di === index);
     d.style.background = di === index ? s.color : '';
   });
 
-  // Chapter label
   chapterLabel.textContent = (index + 1) + ' / ' + slides.length;
 
-  // Accent + ambient glow
   document.documentElement.style.setProperty('--accent', s.color);
   var r = parseInt(s.color.slice(1,3), 16);
   var g = parseInt(s.color.slice(3,5), 16);
@@ -867,7 +869,6 @@ function render(index, animate) {
 }
 
 function fillContent(s) {
-  // -- CHAT SLIDE --
   if (s.type === 'chat') {
     chatActive = true;
     chatContainer.classList.add('active');
@@ -876,7 +877,6 @@ function fillContent(s) {
     return;
   }
 
-  // -- NORMAL SLIDES --
   chatActive = false;
   chatContainer.classList.remove('active');
 
@@ -891,24 +891,14 @@ function fillContent(s) {
 
   desc.textContent = s.desc;
 
-  // Numbers
   nums.innerHTML = '';
   s.nums.forEach(function(n) {
     var block = document.createElement('div');
     block.className = 'num-block';
-    var valDiv = document.createElement('div');
-    valDiv.className = 'num-val';
-    valDiv.style.color = s.color;
-    valDiv.textContent = n.val;
-    var labelDiv = document.createElement('div');
-    labelDiv.className = 'num-label';
-    labelDiv.textContent = n.label;
-    block.appendChild(valDiv);
-    block.appendChild(labelDiv);
+    block.innerHTML = '<div class="num-val" style="color:' + s.color + '">' + n.val + '</div><div class="num-label">' + n.label + '</div>';
     nums.appendChild(block);
   });
 
-  // Depth prompt
   if (s.type === 'company' && s.detail) {
     depthPrompt.style.display = 'flex';
     depthPromptText.textContent = 'Go deeper';
@@ -917,12 +907,10 @@ function fillContent(s) {
     depthPrompt.style.display = 'none';
   }
 
-  // Close detail
   detail.classList.remove('open');
   detail.innerHTML = '';
   depthIndicator.classList.remove('show');
 
-  // CTA
   ctaRow.innerHTML = '';
   if (s.cta) {
     s.cta.forEach(function(c) {
@@ -930,12 +918,11 @@ function fillContent(s) {
       a.href = c.href;
       a.className = 'cta-pill ' + (c.primary ? 'cta-primary' : 'cta-ghost');
       a.textContent = c.text;
-      if (!c.primary && c.href.indexOf('http') === 0) a.target = '_blank';
+      if (!c.primary && c.href.startsWith('http')) a.target = '_blank';
       ctaRow.appendChild(a);
     });
   }
 
-  // Nav hint
   if (s.type === 'company' && s.detail) {
     navHint.textContent = 'Scroll to navigate · Click "Go deeper" for the full story';
   } else {
@@ -993,7 +980,7 @@ function showChatOptions(options) {
   chatOptions.classList.remove('visible');
 
   var filtered = options.filter(function(o) { return o.next === 'contact' || !chatVisited.has(o.next); });
-  var toShow = filtered.length > 0 ? filtered : [{ text: "Let's connect →", next: 'contact' }];
+  var toShow = filtered.length > 0 ? filtered : [{ text: CONNECT_TEXT, next: 'contact' }];
 
   toShow.forEach(function(opt) {
     var pill = document.createElement('button');
@@ -1033,22 +1020,9 @@ function handleChatOption(opt) {
 function showContactCard() {
   var card = document.createElement('div');
   card.className = 'chat-contact-card';
-  var emailLink = document.createElement('a');
-  emailLink.href = 'mailto:jacobcharendoff@gmail.com';
-  emailLink.className = 'chat-contact-link primary';
-  emailLink.textContent = 'jacobcharendoff@gmail.com';
-  var linkedinLink = document.createElement('a');
-  linkedinLink.href = 'https://linkedin.com/in/jacob-charendoff';
-  linkedinLink.target = '_blank';
-  linkedinLink.className = 'chat-contact-link secondary';
-  linkedinLink.textContent = 'LinkedIn';
-  var phoneLink = document.createElement('a');
-  phoneLink.href = 'tel:+16476802324';
-  phoneLink.className = 'chat-contact-link secondary';
-  phoneLink.textContent = '(647) 680-2324';
-  card.appendChild(emailLink);
-  card.appendChild(linkedinLink);
-  card.appendChild(phoneLink);
+  card.innerHTML = '<a href="mailto:jacobcharendoff@gmail.com" class="chat-contact-link primary">jacobcharendoff@gmail.com</a>' +
+    '<a href="https://linkedin.com/in/jacob-charendoff" target="_blank" class="chat-contact-link secondary">LinkedIn</a>' +
+    '<a href="tel:+16476802324" class="chat-contact-link secondary">(647) 680-2324</a>';
   chatThread.appendChild(card);
   scrollChat();
 }
@@ -1057,22 +1031,46 @@ function showContactCard() {
 // FREE-FORM KEYWORD MATCHER
 // ======================================
 var freeformResponses = [
-  { keys: ['salary', 'compensation', 'pay', 'money', 'comp', 'package'], response: "I'm targeting $190K to $250K+ total comp depending on the role and equity structure. But the right problem matters more than the number. I've walked away from bigger offers when the fit wasn't there." },
-  { keys: ['remote', 'location', 'office', 'hybrid', 'where', 'relocate', 'toronto'], response: "Toronto-based. Open to remote anywhere in North America, or hybrid in the Toronto area. I've run distributed teams across time zones so I know how to make remote work actually work." },
-  { keys: ['tech', 'stack', 'tools', 'hubspot', 'crm', 'gong', 'software'], response: "HubSpot, Gong, Looker, workflow automation, CRM architecture. But I'm not a tools person. I'm a systems person. The tool is the last decision. The architecture comes first." },
-  { keys: ['team', 'manage', 'direct report', 'people', 'leadership', 'lead'], response: "I've managed teams from 4 to 50+. I hire people better than me at their specific thing, give them the system and targets, and get out of the way. When it breaks I'm in the weeds. Otherwise I'm building the next thing." },
-  { keys: ['start', 'startup', 'stage', 'series', 'size', 'company size'], response: "Sweet spot is Series B to D, $10M to $100M ARR. Past product-market fit but before the commercial engine is built. That gap between 'we have something people want' and 'we know how to sell it predictably' is where I do my best work." },
-  { keys: ['education', 'degree', 'school', 'university', 'mba'], response: "Started an EMBA, left after one semester when I got promoted to VP and shipped to Peru to run a $22.5M project. The real MBA was building five companies. I'll take P&L ownership over a classroom every time." },
-  { keys: ['weak', 'improve', 'growth area', 'development'], response: "I held onto The Rig Doctor six months too long because I was emotionally attached. Cost me margin on the exit. Now I listen to the numbers first and my feelings second. That's the discipline I've built." },
-  { keys: ['culture', 'value', 'work style', 'environment'], response: "I want a team that moves fast, measures everything, and doesn't confuse activity with progress. Low politics, high accountability. Founders who want to be challenged, not validated." },
-  { keys: ['ai', 'artificial intelligence', 'automation', 'machine learning'], response: "I've built two agentic AI products from scratch. iris. for CNIB (member engagement platform) and Everlabs (health data platform). AI is a tool in the revenue stack, not a strategy. I use it to scale what works." },
-  { keys: ['exit', 'acquisition', 'sell', 'sold'], response: "Three exits totaling $28M+. The Rig Doctor at 4x EBITDA, StarDome Peru at $22.5M USD, plus one more through the Berman portfolio. I know what a business looks like right before it's ready to sell." },
-  { keys: ['available', 'when', 'timeline', 'notice', 'start date'], response: "Currently wrapping a contract engagement. I can be available for the right opportunity within 2-4 weeks. Happy to start conversations now." },
-  { keys: ['reference', 'recommend', 'vouch'], response: "Happy to provide references once we're in a serious conversation. I've got founders, investors, and direct reports who can speak to how I work." },
-  { keys: ['hobby', 'fun', 'outside work', 'personal', 'interest'], response: "I play guitar in a cover band called Every Second Tuesday. I co-founded a guitar gear company. I'm deeply involved with CNIB's sight loss community. I build things. That's the through line in everything I do." },
-  { keys: ['differ', 'unique', 'stand out', 'special', 'why you'], response: "Most people interviewing for VP Revenue roles managed a system someone else built. I build the system. Five times. Three exits. That's a different skill set and it's harder to find." },
-  { keys: ['forecast', 'pipeline', 'data', 'metric', 'analytics'], response: "At Verifast I took pipeline data quality from 55% to 91%, built a forecast that hits 90%+ accuracy, and cut exec reporting from 5 hours a week to 55 minutes. That's what a real revenue OS looks like." }
+  { keys: ['salary', 'compensation', 'pay', 'money', 'comp', 'package', 'earn', 'worth', 'rate'], response: "I'm targeting $190K to $250K+ total comp depending on the role and equity structure. But the right problem matters more than the number. I've walked away from bigger offers when the fit wasn't there." },
+  { keys: ['remote', 'location', 'office', 'hybrid', 'where', 'relocate', 'toronto', 'city', 'move', 'based'], response: "Toronto-based. Open to remote anywhere in North America, or hybrid in the Toronto area. I've run distributed teams across time zones so I know how to make remote work actually work." },
+  { keys: ['tech', 'stack', 'tools', 'hubspot', 'crm', 'gong', 'software', 'platform'], response: "HubSpot, Gong, Looker, workflow automation, CRM architecture. But I'm not a tools person. I'm a systems person. The tool is the last decision. The architecture comes first." },
+  { keys: ['team', 'manage', 'direct report', 'people', 'leadership', 'hire', 'staff', 'report to'], response: "I've managed teams from 4 to 50+. I hire people better than me at their specific thing, give them the system and targets, and get out of the way. When it breaks I'm in the weeds. Otherwise I'm building the next thing." },
+  { keys: ['startup', 'stage', 'series', 'company size', 'type of company', 'ideal company', 'fit'], response: "Sweet spot is Series B to D, $10M to $100M ARR. Past product-market fit but before the commercial engine is built. That gap between 'we have something people want' and 'we know how to sell it predictably' is where I do my best work." },
+  { keys: ['education', 'degree', 'school', 'university', 'mba', 'college', 'study', 'studied', 'graduate'], response: "Started an EMBA, left after one semester when I got promoted to VP and shipped to Peru to run a $22.5M project. The real MBA was building five companies. I'll take P&L ownership over a classroom every time." },
+  { keys: ['weak', 'improve', 'growth area', 'development', 'mistake', 'regret', 'wrong', 'fail', 'learn from'], response: "I held onto The Rig Doctor six months too long because I was emotionally attached. Cost me margin on the exit. Now I listen to the numbers first and my feelings second. That's the discipline I've built." },
+  { keys: ['culture', 'value', 'work style', 'environment', 'type of team', 'kind of team'], response: "I want a team that moves fast, measures everything, and doesn't confuse activity with progress. Low politics, high accountability. Founders who want to be challenged, not validated." },
+  { keys: ['ai', 'artificial intelligence', 'automation', 'machine learning', 'gpt', 'llm', 'chatbot', 'agent'], response: "I've built two agentic AI products from scratch. iris. for CNIB (member engagement platform) and Everlabs (health data platform). AI is a tool in the revenue stack, not a strategy. I use it to scale what works." },
+  { keys: ['exit', 'acquisition', 'sell', 'sold', 'ipo'], response: "Three exits totaling $28M+. The Rig Doctor at 4x EBITDA, StarDome Peru at $22.5M USD, plus one more through the Berman portfolio. I know what a business looks like right before it's ready to sell." },
+  { keys: ['available', 'when can', 'timeline', 'notice', 'start date', 'soon', 'ready'], response: "Currently wrapping a contract engagement. I can be available for the right opportunity within 2-4 weeks. Happy to start conversations now." },
+  { keys: ['reference', 'recommend', 'vouch', 'testimonial'], response: "Happy to provide references once we're in a serious conversation. I've got founders, investors, and direct reports who can speak to how I work." },
+  { keys: ['hobby', 'fun', 'outside work', 'personal', 'interest', 'free time', 'weekend'], response: "I play guitar in a cover band called Every Second Tuesday. I co-founded a guitar gear company. I'm deeply involved with CNIB's sight loss community. I build things. That's the through line in everything I do." },
+  { keys: ['differ', 'unique', 'stand out', 'special', 'why you', 'why should', 'better than', 'compared'], response: "Most people interviewing for VP Revenue roles managed a system someone else built. I build the system. Five times. Three exits. That's a different skill set and it's harder to find." },
+  { keys: ['forecast', 'pipeline', 'data', 'metric', 'analytics', 'dashboard', 'kpi'], response: "At Verifast I took pipeline data quality from 55% to 91%, built a forecast that hits 90%+ accuracy, and cut exec reporting from 5 hours a week to 55 minutes. That's what a real revenue OS looks like." },
+  { keys: ['old', 'age', 'young', 'senior', 'how long', 'years of'], response: "12+ years in revenue and growth. I started at 22 as the first hire at a family office, got promoted three times, built and exited my own company, and have been consulting for high-growth companies since. The experience is in the results, not the number." },
+  { keys: ['next', 'career', 'goal', 'future', 'plan', 'ambition', 'want', 'looking for', 'seeking', 'dream'], response: "I want to build one more revenue engine from scratch at a company that matters. Full ownership, real equity, a product worth selling. I've done it five times. The next one should be the biggest." },
+  { keys: ['about', 'yourself', 'who are', 'tell me about', 'background', 'story', 'journey', 'bio', 'summary'], response: "Revenue operator. Five companies, three exits, $70M+ in revenue built from zero. I specialize in taking companies past product-market fit and building the commercial infrastructure that makes growth predictable. Toronto-based, 12+ years deep." },
+  { keys: ['proud', 'achievement', 'accomplishment', 'best', 'biggest', 'greatest', 'highlight'], response: "Building Berman from 9 people to 50+ and engineering $28M in exits. Not because of the number, but because I built something that outlasted me. The systems I put in place kept working after I left. That's the real test." },
+  { keys: ['leave', 'left', 'quit', 'why did you', 'move on', 'transition'], response: "Every move was toward a bigger problem. Left Berman after 8 years and three promotions because I'd built everything I could build there. Exited TRD because the numbers said it was time. Each step expanded the scope of what I could own." },
+  { keys: ['industry', 'sector', 'vertical', 'space', 'domain', 'field', 'market'], response: "I've worked across hospitality, health tech, SaaS, e-commerce, and nonprofits. The revenue mechanics transfer. What changes is the sales cycle and the buyer. The architecture underneath is the same." },
+  { keys: ['code', 'technical', 'engineer', 'programming', 'develop', 'build software'], response: "I'm not an engineer, but I'm deeply technical. I architect systems, spec requirements, manage engineering teams, and I've built two agentic AI products. I think in systems, not syntax. That's the right abstraction for a revenue leader." },
+  { keys: ['conflict', 'disagree', 'difficult', 'challenge', 'hard', 'tough', 'pressure'], response: "I go to the data first. Most conflicts in revenue orgs come from people looking at different numbers or no numbers at all. Build a shared source of truth and 80% of the arguments disappear. The other 20% you solve by making a call and owning it." },
+  { keys: ['motivat', 'drive', 'passion', 'inspire', 'energy', 'why do you', 'what gets you'], response: "The moment a forecast goes from fiction to signal. When you build the system right and suddenly the CEO can see what's coming three quarters out instead of guessing. That transition from chaos to clarity is what gets me up." },
+  { keys: ['berman', 'family office', 'first job', 'early career'], response: "First hire at a family office at 22. Started in sales, got promoted three times to VP. Built the revenue infrastructure for every company in the portfolio. Eight years, $28M in exits. That's where I learned how to build commercial engines from nothing." },
+  { keys: ['rig doctor', 'trd', 'guitar', 'ecommerce', 'dtc', 'founder'], response: "Built The Rig Doctor while still VP at Berman. DTC e-commerce for guitar gear. Zero to $3.5M revenue, 30K owned audience, team of 12. Cut CAC by 60%. Exited at 4x EBITDA. Learned more about P&L discipline in four years than most people learn in ten." },
+  { keys: ['verifast', 'revops', 'rev ops', 'revenue operations', 'consulting'], response: "Walked into a $36M ARR SaaS company with 50+ sellers, no CRM, no pipeline, no forecast. Built the entire revenue operating system from scratch. Data quality went from 55% to 91%. Exec reporting dropped from 5 hours a week to 55 minutes." },
+  { keys: ['cnib', 'iris', 'blind', 'sight', 'nonprofit', 'charity', 'volunteer', 'pro bono'], response: "Designed iris., an agentic AI platform for CNIB, Canada's largest sight loss organization. 6 personas, 40+ service routes, 150+ edge cases, full crisis protocols. Also built a 6-month accelerator for blind entrepreneurs. All pro bono. Some of my best work." },
+  { keys: ['everlabs', 'health', 'healthtech', 'wellness'], response: "Built the business model and agentic AI platform for Everlabs, an emerging health tech company. Revenue model, pricing architecture, full GTM. The tech aggregates multi-source health data and matches it to personalized recommendations." },
+  { keys: ['peru', 'stardome', 'star dome', 'international', 'global', 'abroad'], response: "$22.5M USD project in Peru. StarDome. I was shipped there mid-promotion to run the whole thing. International operations, cross-cultural team management, massive budget. That's where I learned that revenue systems work regardless of geography." }
 ];
+
+// Fallback responses that keep the conversation going (rotate through them)
+var fallbackResponses = [
+  "That's a new one. I don't have a scripted answer for that, which probably means it's worth discussing live. But I'm still here. Ask me about a specific company, what I'm looking for, or how I work.",
+  "I like that you're going off-script. I'd want to give you a real answer, not a rehearsed one. Try asking about my exits, my management style, or what kind of company fits me.",
+  "Good instinct. I don't have a canned response for that one, but keep going. Ask me about my background, what I've built, the tools I use, or what gets me up in the morning.",
+  "Fair question. I'd rather answer that one in person than give you something surface-level here. But there's plenty more I can tell you. What else are you curious about?"
+];
+var fallbackIndex = 0;
 
 function matchFreeform(input) {
   var lower = input.toLowerCase();
@@ -1110,12 +1108,19 @@ function handleFreeformInput() {
         setTimeout(function() {
           showChatOptions([
             { text: "Tell me more", next: chatVisited.size < 3 ? 'why_you' : 'company_fit' },
-            { text: "Let's connect →", next: 'contact' }
+            { text: CONNECT_TEXT, next: 'contact' }
           ]);
         }, 350);
       } else {
-        addMessage('jacob', "Good question. That's one I'd rather answer live. Reach out and let's talk.");
-        setTimeout(function() { showContactCard(); }, 400);
+        addMessage('jacob', fallbackResponses[fallbackIndex % fallbackResponses.length]);
+        fallbackIndex++;
+        setTimeout(function() {
+          showChatOptions([
+            { text: "What are you looking for?", next: 'looking_for' },
+            { text: "Tell me about yourself", next: 'why_you' },
+            { text: CONNECT_TEXT, next: 'contact' }
+          ]);
+        }, 350);
       }
     });
   }, 350);

@@ -25,9 +25,9 @@ body {
   transition: background 0.8s ease;
 }
 
-/* ======================================
+/* ══════════════════════════════════════
    STAGE
-   ====================================== */
+   ══════════════════════════════════════ */
 .stage {
   flex: 1; display: flex; flex-direction: column;
   align-items: center; justify-content: center;
@@ -66,16 +66,17 @@ body {
 }
 .top-depth-indicator.show { opacity: 1; }
 
-/* ======================================
+/* ══════════════════════════════════════
    CONTENT: morphs in place
-   ====================================== */
+   ══════════════════════════════════════ */
 .content {
   display: flex; flex-direction: column;
   align-items: center; gap: 0;
-  transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
   max-width: 800px; width: 100%;
 }
-.content.transitioning { opacity: 0; transform: scale(0.98) translateY(6px); }
+.content.slide-out-up { opacity: 0; transform: translateY(-30px); }
+.content.slide-out-down { opacity: 0; transform: translateY(30px); }
 
 /* Eyebrow */
 .eyebrow {
@@ -123,11 +124,15 @@ body {
 /* -- DEPTH PROMPT -- */
 .depth-prompt {
   margin-top: 20px;
-  font-size: 12px; color: var(--faint);
-  cursor: pointer; transition: color 0.2s;
-  display: flex; align-items: center; gap: 6px;
+  font-size: 13px; color: var(--dim);
+  cursor: pointer; transition: all 0.25s;
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 20px;
+  border-radius: 980px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.03);
 }
-.depth-prompt:hover { color: var(--dim); }
+.depth-prompt:hover { color: var(--text); background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.12); }
 .depth-prompt .arrow {
   display: inline-block; transition: transform 0.3s;
 }
@@ -200,9 +205,9 @@ body {
   width: 40px; height: 2px; margin: 0 auto 20px;
 }
 
-/* ======================================
+/* ══════════════════════════════════════
    CHAT (iMessage-style interview)
-   ====================================== */
+   ══════════════════════════════════════ */
 .chat-container {
   position: absolute;
   top: 52px; bottom: 16px;
@@ -348,12 +353,43 @@ body {
 }
 .chat-contact-link.secondary:hover { background: rgba(255,255,255,0.1); }
 
+/* Chat input bar */
+.chat-input-bar {
+  flex-shrink: 0;
+  padding: 8px 4px 4px;
+  display: flex; gap: 8px; align-items: center;
+}
+.chat-input {
+  flex: 1;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px;
+  padding: 10px 16px;
+  font-size: 14px; font-family: var(--font);
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.2s;
+}
+.chat-input::placeholder { color: var(--faint); }
+.chat-input:focus { border-color: rgba(255,255,255,0.2); }
+.chat-send {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: opacity 0.2s;
+  flex-shrink: 0;
+}
+.chat-send:hover { opacity: 0.85; }
+.chat-send svg { width: 16px; height: 16px; fill: white; }
+
 /* Spacer between chat groups */
 .chat-spacer { height: 10px; flex-shrink: 0; }
 
-/* ======================================
+/* ══════════════════════════════════════
    BOTTOM: progress + dots + hint
-   ====================================== */
+   ══════════════════════════════════════ */
 .bottom {
   padding: 12px 48px 20px;
   display: flex; flex-direction: column; align-items: center; gap: 12px;
@@ -439,6 +475,12 @@ body {
     </div>
     <div class="chat-thread" id="chatThread"></div>
     <div class="chat-options" id="chatOptions"></div>
+    <div class="chat-input-bar">
+      <input type="text" class="chat-input" id="chatInput" placeholder="Or type your own question..." autocomplete="off">
+      <button class="chat-send" id="chatSend" aria-label="Send">
+        <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+      </button>
+    </div>
   </div>
 </div>
 
@@ -453,9 +495,9 @@ body {
 </div>
 
 <script>
-// ======================================
+// ══════════════════════════════════════
 // SLIDE DATA
-// ======================================
+// ══════════════════════════════════════
 var slides = [
   // -- INTRO --
   {
@@ -505,7 +547,7 @@ var slides = [
     group: 1,
     detail: {
       cells: [
-        { label: 'The Context', text: 'Joined as first hire at a family office with a portfolio spanning hospitality and health tech. No revenue infrastructure, no playbook, no commercial team beyond the founders.', color: '#ff6b6b' },
+        { label: 'The Challenge', text: 'Joined as first hire at a family office with a portfolio spanning hospitality and health tech. No revenue infrastructure, no playbook, no commercial team beyond the founders.', color: '#ff6b6b' },
         { label: 'What I Built', text: 'Revenue systems for every portfolio company. Hiring and enablement processes. Commercial due diligence and investor reporting frameworks. Scaled the entire organization.', color: '#ff9f0a' },
         { label: 'The Outcome', text: 'Three promotions in 8 years. $28M+ in combined exits across two portfolio companies. Built the commercial engine that made those exits possible.', color: '#30d158' }
       ],
@@ -534,9 +576,9 @@ var slides = [
     group: 1,
     detail: {
       cells: [
-        { label: 'From Zero', text: 'Started as a side project while still VP at Berman. DTC e-commerce in a niche market. No existing playbook, no team, no funding.', color: '#ff6b6b' },
+        { label: 'The Challenge', text: 'Started as a side project while still VP at Berman. DTC e-commerce in a niche market. No existing playbook, no team, no funding.', color: '#ff6b6b' },
         { label: 'What I Built', text: 'Full commercial stack: CRM, pricing, lead scoring, retention, analytics. Shifted from paid to owned audience (30K). Built team of 12. Full P&L ownership.', color: '#ffd60a' },
-        { label: 'The Exit', text: '$3.5M revenue across two countries. Cut CAC by 60% through owned channels. Exited at 4x EBITDA in 2023.', color: '#30d158' }
+        { label: 'The Outcome', text: '$3.5M revenue across two countries. Cut CAC by 60% through owned channels. Exited at 4x EBITDA in 2023.', color: '#30d158' }
       ],
       ba: [
         { before: '$0', after: '$3.5M', label: 'Revenue' },
@@ -567,7 +609,7 @@ var slides = [
     role: 'Revenue Operations Consultant',
     desc: '50+ sellers, no CRM, no pipeline, no forecast. Built the entire revenue operating system from scratch. HubSpot, Gong, Looker.',
     nums: [
-      { val: '55→91%', label: 'Data Quality' },
+      { val: '55↑91%', label: 'Data Quality' },
       { val: '90%+', label: 'Forecast' },
       { val: '-82%', label: 'Reporting' }
     ],
@@ -576,7 +618,7 @@ var slides = [
     group: 2,
     detail: {
       cells: [
-        { label: 'The Problem', text: '50+ sellers, no CRM, no pipeline visibility, no forecast. Execs spending 5+ hrs/wk stitching spreadsheets together. Data quality at 55%.', color: '#ff6b6b' },
+        { label: 'The Challenge', text: '50+ sellers, no CRM, no pipeline visibility, no forecast. Execs spending 5+ hrs/wk stitching spreadsheets together. Data quality at 55%.', color: '#ff6b6b' },
         { label: 'What I Built', text: 'Full HubSpot ecosystem from scratch: custom pipelines, lead scoring, attribution, automated workflows. Deployed Gong for conversation intel and Looker for BI. Trained the entire sales org.', color: '#5ac8fa' },
         { label: 'The Outcome', text: 'Pipeline data quality: 55% to 91%. Forecast accuracy: guesswork to 90%+. Exec reporting: 5 hrs/wk to 55 min. Full revenue OS running in under a year.', color: '#30d158' }
       ],
@@ -605,7 +647,7 @@ var slides = [
     group: 2,
     detail: {
       cells: [
-        { label: 'The Context', text: 'CNIB needed two things: a way to scale member engagement beyond human capacity, and a pipeline for blind entrepreneurs. No existing product for either.', color: '#ff6b6b' },
+        { label: 'The Challenge', text: 'CNIB needed two things: a way to scale member engagement beyond human capacity, and a pipeline for blind entrepreneurs. No existing product for either.', color: '#ff6b6b' },
         { label: 'What I Built', text: 'iris.: full agentic AI platform with 6 persona flows, 40+ service routing, 150+ edge cases, crisis protocols. Venture Collective: 6-month accelerator from mindset to first dollar.', color: '#bf5af2' },
         { label: 'The Outcome', text: 'Two complete products delivered pro bono. iris. ready for pilot deployment. Venture Collective curriculum complete with live judging panel.', color: '#30d158' }
       ],
@@ -629,7 +671,7 @@ var slides = [
     group: 2,
     detail: {
       cells: [
-        { label: 'The Context', text: 'Early-stage health tech startup with the science but no commercial engine. No business model, no revenue architecture, no GTM.', color: '#ff6b6b' },
+        { label: 'The Challenge', text: 'Early-stage health tech startup with the science but no commercial engine. No business model, no revenue architecture, no GTM.', color: '#ff6b6b' },
         { label: 'What I Built', text: 'Agentic AI platform aggregating multi-source health data matched to personalized recommendations. Revenue model, pricing architecture, full GTM strategy.', color: '#30d158' },
         { label: 'The Outcome', text: 'Tech developed and deployed as working beta with real users. Complete business model delivered. Company positioned for fundraise.', color: '#30d158' }
       ],
@@ -648,9 +690,9 @@ var slides = [
   }
 ];
 
-// ======================================
+// ══════════════════════════════════════
 // CHAT CONVERSATION TREE
-// ======================================
+// ══════════════════════════════════════
 var chatTree = {
   start: {
     jacob: "Hey. You made it through the whole thing. That means you're either curious or hiring. Either way, ask me anything.",
@@ -711,15 +753,16 @@ var chatTree = {
   }
 };
 
-// ======================================
+// ══════════════════════════════════════
 // STATE
-// ======================================
+// ══════════════════════════════════════
 var current = 0;
 var depthOpen = false;
 var transitioning = false;
-var scrollCooldown = false;
 var chatActive = false;
 var chatVisited = new Set();
+var scrollAccum = 0;
+var scrollTimer = null;
 
 var content = document.getElementById('content');
 var eyebrow = document.getElementById('eyebrow');
@@ -741,10 +784,12 @@ var navHint = document.getElementById('navHint');
 var chatContainer = document.getElementById('chatContainer');
 var chatThread = document.getElementById('chatThread');
 var chatOptions = document.getElementById('chatOptions');
+var chatInput = document.getElementById('chatInput');
+var chatSend = document.getElementById('chatSend');
 
-// ======================================
+// ══════════════════════════════════════
 // BUILD DOTS
-// ======================================
+// ══════════════════════════════════════
 var lastGroup = -1;
 slides.forEach(function(s, i) {
   if (s.group !== lastGroup && lastGroup !== -1) {
@@ -761,41 +806,53 @@ slides.forEach(function(s, i) {
   chapterDots.appendChild(dot);
 });
 
-// ======================================
+// ══════════════════════════════════════
 // RENDER
-// ======================================
+// ══════════════════════════════════════
+var lastIndex = 0;
 function render(index, animate) {
   if (animate === undefined) animate = true;
   var s = slides[index];
   depthOpen = false;
+  var direction = index >= lastIndex ? 'up' : 'down';
+  lastIndex = index;
 
   if (animate) {
     transitioning = true;
-    content.classList.add('transitioning');
+    var outClass = direction === 'up' ? 'slide-out-up' : 'slide-out-down';
+    content.classList.add(outClass);
     if (chatActive) chatContainer.classList.remove('active');
 
     setTimeout(function() {
+      content.classList.remove(outClass);
+      var inClass = direction === 'up' ? 'slide-out-down' : 'slide-out-up';
+      content.classList.add(inClass);
       fillContent(s);
+
+      content.offsetHeight;
       if (s.type !== 'chat') {
-        content.classList.remove('transitioning');
+        content.classList.remove(inClass);
       }
       setTimeout(function() { transitioning = false; }, 350);
-    }, 350);
+    }, 300);
   } else {
     fillContent(s);
   }
 
+  // Progress
   var pct = (index / (slides.length - 1)) * 100;
   progressFill.style.width = pct + '%';
   progressFill.style.background = s.color;
   progressDot.style.background = s.color;
 
+  // Dots
   document.querySelectorAll('.chapter-dot').forEach(function(d) {
     var di = parseInt(d.dataset.index);
     d.classList.toggle('active', di === index);
     d.style.background = di === index ? s.color : '';
   });
 
+  // Chapter label
   chapterLabel.textContent = (index + 1) + ' / ' + slides.length;
 
   // Accent + ambient glow
@@ -807,6 +864,7 @@ function render(index, animate) {
 }
 
 function fillContent(s) {
+  // -- CHAT SLIDE --
   if (s.type === 'chat') {
     chatActive = true;
     chatContainer.classList.add('active');
@@ -815,25 +873,39 @@ function fillContent(s) {
     return;
   }
 
+  // -- NORMAL SLIDES --
   chatActive = false;
   chatContainer.classList.remove('active');
 
   eyebrow.textContent = s.eyebrow;
   eyebrow.style.color = s.color;
+
   headline.innerHTML = s.headline.replace(/\n/g, '<br>');
+
   role.textContent = s.role;
   role.style.color = s.color;
   role.style.display = s.role ? '' : 'none';
+
   desc.textContent = s.desc;
 
+  // Numbers
   nums.innerHTML = '';
   s.nums.forEach(function(n) {
     var block = document.createElement('div');
     block.className = 'num-block';
-    block.innerHTML = '<div class="num-val" style="color:' + s.color + '">' + n.val + '</div><div class="num-label">' + n.label + '</div>';
+    var valDiv = document.createElement('div');
+    valDiv.className = 'num-val';
+    valDiv.style.color = s.color;
+    valDiv.textContent = n.val;
+    var labelDiv = document.createElement('div');
+    labelDiv.className = 'num-label';
+    labelDiv.textContent = n.label;
+    block.appendChild(valDiv);
+    block.appendChild(labelDiv);
     nums.appendChild(block);
   });
 
+  // Depth prompt
   if (s.type === 'company' && s.detail) {
     depthPrompt.style.display = 'flex';
     depthPromptText.textContent = 'Go deeper';
@@ -842,10 +914,12 @@ function fillContent(s) {
     depthPrompt.style.display = 'none';
   }
 
+  // Close detail
   detail.classList.remove('open');
   detail.innerHTML = '';
   depthIndicator.classList.remove('show');
 
+  // CTA
   ctaRow.innerHTML = '';
   if (s.cta) {
     s.cta.forEach(function(c) {
@@ -853,11 +927,12 @@ function fillContent(s) {
       a.href = c.href;
       a.className = 'cta-pill ' + (c.primary ? 'cta-primary' : 'cta-ghost');
       a.textContent = c.text;
-      if (!c.primary && c.href.startsWith('http')) a.target = '_blank';
+      if (!c.primary && c.href.indexOf('http') === 0) a.target = '_blank';
       ctaRow.appendChild(a);
     });
   }
 
+  // Nav hint
   if (s.type === 'company' && s.detail) {
     navHint.textContent = 'Scroll to navigate · Click "Go deeper" for the full story';
   } else {
@@ -865,9 +940,9 @@ function fillContent(s) {
   }
 }
 
-// ======================================
+// ══════════════════════════════════════
 // CHAT ENGINE
-// ======================================
+// ══════════════════════════════════════
 function startChat() {
   chatVisited.clear();
   chatThread.innerHTML = '';
@@ -955,14 +1030,111 @@ function handleChatOption(opt) {
 function showContactCard() {
   var card = document.createElement('div');
   card.className = 'chat-contact-card';
-  card.innerHTML = '<a href="mailto:jacobcharendoff@gmail.com" class="chat-contact-link primary">jacobcharendoff@gmail.com</a><a href="https://linkedin.com/in/jacob-charendoff" target="_blank" class="chat-contact-link secondary">LinkedIn</a><a href="tel:+16476802324" class="chat-contact-link secondary">(647) 680-2324</a>';
+  var emailLink = document.createElement('a');
+  emailLink.href = 'mailto:jacobcharendoff@gmail.com';
+  emailLink.className = 'chat-contact-link primary';
+  emailLink.textContent = 'jacobcharendoff@gmail.com';
+  var linkedinLink = document.createElement('a');
+  linkedinLink.href = 'https://linkedin.com/in/jacob-charendoff';
+  linkedinLink.target = '_blank';
+  linkedinLink.className = 'chat-contact-link secondary';
+  linkedinLink.textContent = 'LinkedIn';
+  var phoneLink = document.createElement('a');
+  phoneLink.href = 'tel:+16476802324';
+  phoneLink.className = 'chat-contact-link secondary';
+  phoneLink.textContent = '(647) 680-2324';
+  card.appendChild(emailLink);
+  card.appendChild(linkedinLink);
+  card.appendChild(phoneLink);
   chatThread.appendChild(card);
   scrollChat();
 }
 
 // ======================================
-// DEPTH TOGGLE
+// FREE-FORM KEYWORD MATCHER
 // ======================================
+var freeformResponses = [
+  { keys: ['salary', 'compensation', 'pay', 'money', 'comp', 'package'], response: "I'm targeting $190K to $250K+ total comp depending on the role and equity structure. But the right problem matters more than the number. I've walked away from bigger offers when the fit wasn't there." },
+  { keys: ['remote', 'location', 'office', 'hybrid', 'where', 'relocate', 'toronto'], response: "Toronto-based. Open to remote anywhere in North America, or hybrid in the Toronto area. I've run distributed teams across time zones so I know how to make remote work actually work." },
+  { keys: ['tech', 'stack', 'tools', 'hubspot', 'crm', 'gong', 'software'], response: "HubSpot, Gong, Looker, workflow automation, CRM architecture. But I'm not a tools person. I'm a systems person. The tool is the last decision. The architecture comes first." },
+  { keys: ['team', 'manage', 'direct report', 'people', 'leadership', 'lead'], response: "I've managed teams from 4 to 50+. I hire people better than me at their specific thing, give them the system and targets, and get out of the way. When it breaks I'm in the weeds. Otherwise I'm building the next thing." },
+  { keys: ['start', 'startup', 'stage', 'series', 'size', 'company size'], response: "Sweet spot is Series B to D, $10M to $100M ARR. Past product-market fit but before the commercial engine is built. That gap between 'we have something people want' and 'we know how to sell it predictably' is where I do my best work." },
+  { keys: ['education', 'degree', 'school', 'university', 'mba'], response: "Started an EMBA, left after one semester when I got promoted to VP and shipped to Peru to run a $22.5M project. The real MBA was building five companies. I'll take P&L ownership over a classroom every time." },
+  { keys: ['weak', 'improve', 'growth area', 'development'], response: "I held onto The Rig Doctor six months too long because I was emotionally attached. Cost me margin on the exit. Now I listen to the numbers first and my feelings second. That's the discipline I've built." },
+  { keys: ['culture', 'value', 'work style', 'environment'], response: "I want a team that moves fast, measures everything, and doesn't confuse activity with progress. Low politics, high accountability. Founders who want to be challenged, not validated." },
+  { keys: ['ai', 'artificial intelligence', 'automation', 'machine learning'], response: "I've built two agentic AI products from scratch. iris. for CNIB (member engagement platform) and Everlabs (health data platform). AI is a tool in the revenue stack, not a strategy. I use it to scale what works." },
+  { keys: ['exit', 'acquisition', 'sell', 'sold'], response: "Three exits totaling $28M+. The Rig Doctor at 4x EBITDA, StarDome Peru at $22.5M USD, plus one more through the Berman portfolio. I know what a business looks like right before it's ready to sell." },
+  { keys: ['available', 'when', 'timeline', 'notice', 'start date'], response: "Currently wrapping a contract engagement. I can be available for the right opportunity within 2-4 weeks. Happy to start conversations now." },
+  { keys: ['reference', 'recommend', 'vouch'], response: "Happy to provide references once we're in a serious conversation. I've got founders, investors, and direct reports who can speak to how I work." },
+  { keys: ['hobby', 'fun', 'outside work', 'personal', 'interest'], response: "I play guitar in a cover band called Every Second Tuesday. I co-founded a guitar gear company. I'm deeply involved with CNIB's sight loss community. I build things. That's the through line in everything I do." },
+  { keys: ['differ', 'unique', 'stand out', 'special', 'why you'], response: "Most people interviewing for VP Revenue roles managed a system someone else built. I build the system. Five times. Three exits. That's a different skill set and it's harder to find." },
+  { keys: ['forecast', 'pipeline', 'data', 'metric', 'analytics'], response: "At Verifast I took pipeline data quality from 55% to 91%, built a forecast that hits 90%+ accuracy, and cut exec reporting from 5 hours a week to 55 minutes. That's what a real revenue OS looks like." }
+];
+
+function matchFreeform(input) {
+  var lower = input.toLowerCase();
+  var best = null;
+  var bestCount = 0;
+  for (var i = 0; i < freeformResponses.length; i++) {
+    var count = 0;
+    for (var j = 0; j < freeformResponses[i].keys.length; j++) {
+      if (lower.indexOf(freeformResponses[i].keys[j]) !== -1) count++;
+    }
+    if (count > bestCount) {
+      bestCount = count;
+      best = freeformResponses[i];
+    }
+  }
+  return best ? best.response : null;
+}
+
+function handleFreeformInput() {
+  var text = chatInput.value.trim();
+  if (!text) return;
+
+  chatInput.value = '';
+  chatOptions.classList.remove('visible');
+  chatOptions.innerHTML = '';
+
+  addMessage('visitor', text);
+
+  var matched = matchFreeform(text);
+
+  setTimeout(function() {
+    showTyping(function() {
+      if (matched) {
+        addMessage('jacob', matched);
+        setTimeout(function() {
+          showChatOptions([
+            { text: "Tell me more", next: chatVisited.size < 3 ? 'why_you' : 'company_fit' },
+            { text: "Let's connect →", next: 'contact' }
+          ]);
+        }, 350);
+      } else {
+        addMessage('jacob', "Good question. That's one I'd rather answer live. Reach out and let's talk.");
+        setTimeout(function() { showContactCard(); }, 400);
+      }
+    });
+  }, 350);
+}
+
+chatSend.addEventListener('click', handleFreeformInput);
+chatInput.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    e.stopPropagation();
+    handleFreeformInput();
+  }
+});
+
+// Prevent keyboard nav from firing when typing in chat input
+chatInput.addEventListener('keydown', function(e) {
+  e.stopPropagation();
+});
+
+// ======================================
+// DEPTH TOGGLE
+// ══════════════════════════════════════
 function toggleDepth() {
   var s = slides[current];
   if (!s.detail) return;
@@ -999,9 +1171,9 @@ function toggleDepth() {
   }
 }
 
-// ======================================
+// ══════════════════════════════════════
 // NAVIGATION
-// ======================================
+// ══════════════════════════════════════
 function goTo(index) {
   if (transitioning || index === current || index < 0 || index >= slides.length) return;
   current = index;
@@ -1011,20 +1183,28 @@ function goTo(index) {
 function next() { goTo(current + 1); }
 function prev() { goTo(current - 1); }
 
+// Scroll - accumulate delta for smooth trackpad support
 window.addEventListener('wheel', function(e) {
-  if (chatActive || scrollCooldown || transitioning) return;
-  if (depthOpen && e.deltaY < -20) {
-    scrollCooldown = true;
-    toggleDepth();
-    setTimeout(function() { scrollCooldown = false; }, 500);
-    return;
+  if (chatActive || transitioning) return;
+  scrollAccum += e.deltaY;
+
+  clearTimeout(scrollTimer);
+  scrollTimer = setTimeout(function() { scrollAccum = 0; }, 200);
+
+  var threshold = 80;
+  if (Math.abs(scrollAccum) >= threshold) {
+    if (depthOpen && scrollAccum < 0) {
+      toggleDepth();
+    } else if (scrollAccum > 0) {
+      next();
+    } else {
+      prev();
+    }
+    scrollAccum = 0;
   }
-  scrollCooldown = true;
-  if (e.deltaY > 30) next();
-  else if (e.deltaY < -30) prev();
-  setTimeout(function() { scrollCooldown = false; }, 800);
 }, { passive: true });
 
+// Arrow keys
 window.addEventListener('keydown', function(e) {
   if (chatActive) return;
   if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === ' ') {
@@ -1043,6 +1223,7 @@ window.addEventListener('keydown', function(e) {
   }
 });
 
+// Progress track click
 progressTrack.addEventListener('click', function(e) {
   var rect = progressTrack.getBoundingClientRect();
   var pct = (e.clientX - rect.left) / rect.width;
@@ -1050,6 +1231,7 @@ progressTrack.addEventListener('click', function(e) {
   goTo(target);
 });
 
+// Touch swipe
 var touchStartY = 0;
 window.addEventListener('touchstart', function(e) { touchStartY = e.touches[0].clientY; }, { passive: true });
 window.addEventListener('touchend', function(e) {
@@ -1060,9 +1242,9 @@ window.addEventListener('touchend', function(e) {
   }
 }, { passive: true });
 
-// ======================================
+// ══════════════════════════════════════
 // INIT
-// ======================================
+// ══════════════════════════════════════
 render(0, false);
 </script>
 

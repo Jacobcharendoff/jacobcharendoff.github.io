@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Jacob Charendoff — Case Studies</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+:root{
+  --bg:#000; --panel:#0c0c0e; --text:#f5f5f7; --dim:#a1a1a6; --faint:#6e6e73;
+  --line:#1f1f22; --accent:#2997ff; --font:'Inter',-apple-system,sans-serif;
+}
+html,body{ background:var(--bg); color:var(--text); font-family:var(--font); -webkit-font-smoothing:antialiased; }
+body{ line-height:1.6; }
+a{ color:var(--accent); text-decoration:none; }
+
+/* ===== GATE ===== */
+.gate{
+  position:fixed; inset:0; z-index:100; background:var(--bg);
+  display:flex; align-items:center; justify-content:center; padding:24px;
+}
+.gate-card{
+  width:100%; max-width:440px; background:var(--panel);
+  border:1px solid var(--line); border-radius:18px; padding:40px 34px;
+}
+.gate-eyebrow{ font-size:12px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--accent); margin-bottom:14px; }
+.gate-card h1{ font-size:26px; font-weight:800; letter-spacing:-0.5px; line-height:1.2; margin-bottom:12px; }
+.gate-card p{ font-size:15px; color:var(--dim); margin-bottom:24px; }
+.field{ margin-bottom:14px; }
+.field label{ display:block; font-size:12px; font-weight:600; color:var(--faint); margin-bottom:6px; letter-spacing:.3px; }
+.field input{
+  width:100%; background:#000; border:1px solid var(--line); border-radius:10px;
+  padding:12px 14px; color:var(--text); font-family:var(--font); font-size:15px;
+}
+.field input:focus{ outline:none; border-color:var(--accent); }
+.gate-btn{
+  width:100%; margin-top:8px; padding:13px; border:none; border-radius:10px;
+  background:var(--accent); color:#fff; font-family:var(--font); font-size:15px; font-weight:700;
+  cursor:pointer; transition:opacity .2s;
+}
+.gate-btn:hover{ opacity:.9; }
+.gate-btn:disabled{ opacity:.5; cursor:default; }
+.gate-fine{ font-size:12px; color:var(--faint); margin-top:16px; text-align:center; }
+.gate-err{ font-size:13px; color:#ff6b6b; margin-top:10px; min-height:18px; }
+
+/* ===== CONTENT ===== */
+.wrap{ max-width:860px; margin:0 auto; padding:72px 28px 100px; }
+.masthead{ border-bottom:1px solid var(--line); padding-bottom:28px; margin-bottom:8px; }
+.masthead .name{ font-size:34px; font-weight:900; letter-spacing:-1.5px; }
+.masthead .role{ font-size:15px; color:var(--accent); font-weight:600; margin-top:4px; }
+.masthead .lede{ font-size:17px; color:var(--dim); margin-top:18px; max-width:640px; }
+.confnote{ font-size:12px; color:var(--faint); margin-top:16px; }
+
+.cs{ padding:46px 0; border-bottom:1px solid var(--line); }
+.cs-top{ display:flex; flex-wrap:wrap; align-items:baseline; gap:10px; margin-bottom:6px; }
+.cs-co{ font-size:24px; font-weight:800; letter-spacing:-0.5px; }
+.cs-tag{ font-size:12px; font-weight:600; color:var(--faint); letter-spacing:.5px; }
+.cs-role{ font-size:14px; color:var(--accent); font-weight:600; margin-bottom:22px; }
+
+.metrics{ display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:14px; margin-bottom:26px; }
+.metric{ background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:16px; }
+.metric .v{ font-size:22px; font-weight:800; letter-spacing:-0.5px; }
+.metric .l{ font-size:12px; color:var(--dim); margin-top:3px; }
+
+.car{ margin-bottom:14px; }
+.car h4{ font-size:12px; font-weight:700; letter-spacing:1.2px; text-transform:uppercase; color:var(--faint); margin-bottom:5px; }
+.car p{ font-size:15px; color:var(--text); }
+.car.action p, .car.challenge p{ color:var(--dim); }
+
+.foot{ padding:48px 0 0; text-align:center; }
+.foot p{ color:var(--dim); font-size:15px; margin-bottom:18px; }
+.foot a.cta{ display:inline-block; background:var(--accent); color:#fff; font-weight:700; padding:13px 26px; border-radius:10px; font-size:15px; }
+.foot .alt{ display:block; margin-top:16px; font-size:14px; color:var(--faint); }
+.hidden{ display:none !important; }
+@media(max-width:600px){ .masthead .name{ font-size:28px; } .cs-co{ font-size:21px; } }
+</style>
+</head>
+<body>
+
+<!-- GATE -->
+<div class="gate" id="gate">
+  <div class="gate-card">
+    <div class="gate-eyebrow">The Detail</div>
+    <h1>The full case studies, with the numbers.</h1>
+    <p>The public page stays high level. The real metrics, what I owned, what moved, and how it played out, live here. Tell me who you are and it unlocks.</p>
+    <form id="gateForm">
+      <div class="field"><label for="g-name">Name</label><input id="g-name" type="text" autocomplete="name" required></div>
+      <div class="field"><label for="g-email">Email</label><input id="g-email" type="email" autocomplete="email" required></div>
+      <div class="field"><label for="g-company">Company</label><input id="g-company" type="text" autocomplete="organization"></div>
+      <button class="gate-btn" id="gateBtn" type="submit">Unlock the case studies</button>
+      <div class="gate-err" id="gateErr"></div>
+    </form>
+    <div class="gate-fine">No spam. This just tells me who's looking.</div>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="wrap hidden" id="content">
+  <div class="masthead">
+    <div class="name">Jacob Charendoff</div>
+    <div class="role">Revenue &amp; Growth Leader</div>
+    <div class="lede">Four chapters, same pattern: walk into a revenue engine that isn't working yet, own the number, build what's missing, and leave something that holds up under buyer scrutiny. Here's the detail behind each one.</div>
+    <div class="confnote">Shared in confidence. Figures are accurate as of each engagement and offered for evaluation, not redistribution.</div>
+  </div>
+
+  <!-- VERIFAST -->
+  <section class="cs">
+    <div class="cs-top"><div class="cs-co">Verifast</div><div class="cs-tag">B2B SaaS · Sep 2025 – May 2026</div></div>
+    <div class="cs-role">Contract Head of Revenue</div>
+    <div class="metrics">
+      <div class="metric"><div class="v">$30M → $36M</div><div class="l">ARR in under a year</div></div>
+      <div class="metric"><div class="v">112%</div><div class="l">Net revenue retention</div></div>
+      <div class="metric"><div class="v">35+</div><div class="l">New logos closed</div></div>
+      <div class="metric"><div class="v">30</div><div class="l">Person revenue org</div></div>
+    </div>
+    <div class="car challenge"><h4>Challenge</h4><p>A high-growth platform at $30M ARR with revenue leaking between stages. Pipeline, forecast, and handoffs were each breaking in their own way, and leadership couldn't trust the number.</p></div>
+    <div class="car action"><h4>Action</h4><p>Brought in by the CEO to own Sales, Marketing, and Customer Success across a 30-person org. Rebuilt the GTM system end to end: standardized stages, installed deal-review discipline, fixed the Sales-to-Onboarding handoff, and put weekly revenue reconciliation in place.</p></div>
+    <div class="car"><h4>Result</h4><p>20% ARR growth to $36M, net revenue retention at 112%, and 35+ new logos, all in under a year. Forecast accuracy past 90% within two quarters. Handoff time cut 75% (48 to 12 hours) and late-stage pipeline completeness up from 55% to 91%.</p></div>
+  </section>
+
+  <!-- THE RIG DOCTOR -->
+  <section class="cs">
+    <div class="cs-top"><div class="cs-co">The Rig Doctor</div><div class="cs-tag">DTC · Co-Founder · 2022 – 2024 (Exited)</div></div>
+    <div class="cs-role">Co-Founder, owned the full commercial function</div>
+    <div class="metrics">
+      <div class="metric"><div class="v">$0 → $3.5M</div><div class="l">Annual revenue</div></div>
+      <div class="metric"><div class="v">+200%</div><div class="l">AOV ($120 → $360)</div></div>
+      <div class="metric"><div class="v">30K</div><div class="l">Owned audience</div></div>
+      <div class="metric"><div class="v">4x</div><div class="l">EBITDA exit</div></div>
+    </div>
+    <div class="car challenge"><h4>Challenge</h4><p>A standing start. No funding, no team, no playbook, founded on the side while I was still running revenue at Berman.</p></div>
+    <div class="car action"><h4>Action</h4><p>Owned everything commercial: pricing, product bundling, lifecycle, and a repeatable acquisition model with tight unit economics. Built a 30K owned audience that became the primary channel at near-zero incremental CAC, and a team of 12 plus the ops, fulfillment, and CX playbooks that let the business run without me.</p></div>
+    <div class="car"><h4>Result</h4><p>Zero to $3.5M in annual revenue across two countries. Average order value up 200%, from roughly $120 to $360. Led the majority stake sale and fully exited at 4x EBITDA, running board reporting and investor comms through the transaction.</p></div>
+  </section>
+
+  <!-- BERMAN -->
+  <section class="cs">
+    <div class="cs-top"><div class="cs-co">Berman Ventures</div><div class="cs-tag">Health Tech &amp; Hospitality · 2014 – 2022</div></div>
+    <div class="cs-role">Sales &amp; Marketing Manager → Director of Operations → VP, Revenue &amp; Growth</div>
+    <div class="metrics">
+      <div class="metric"><div class="v">$22.5M</div><div class="l">StarDome revenue</div></div>
+      <div class="metric"><div class="v">~22%</div><div class="l">EBITDA margin (~$5M)</div></div>
+      <div class="metric"><div class="v">$28M+</div><div class="l">Across two exits</div></div>
+      <div class="metric"><div class="v">9 → 50+</div><div class="l">Team scaled</div></div>
+    </div>
+    <div class="car challenge"><h4>Challenge</h4><p>Hired as the first commercial hire, pre-revenue, for a family-backed portfolio in health tech and hospitality. The job grew from proving the model to making two companies sellable.</p></div>
+    <div class="car action"><h4>Action</h4><p>Built the first CRM and revenue reporting from scratch and grew the original business to its first seven figures. Promoted to Director of Operations to stabilize delivery as revenue tripled, then to VP, Revenue &amp; Growth across both companies. Led the ground-up commercial build for StarDome Peru and restructured pricing across the portfolio to smooth seasonality and survive buyer scrutiny.</p></div>
+    <div class="car"><h4>Result</h4><p>Scaled StarDome to $22.5M USD in revenue at a ~22% EBITDA margin (~$5M EBITDA) and grew the team from 9 to 50+. Ran board reporting, due diligence, and transition planning for two exits totaling $28M+: an $8.5M health tech transaction and a ~$19.5M hospitality sale at roughly 4x EBITDA.</p></div>
+  </section>
+
+  <!-- STAYBOOKT -->
+  <section class="cs">
+    <div class="cs-top"><div class="cs-co">StayBookt</div><div class="cs-tag">Agentic AI Revenue Platform · 2026 – Present</div></div>
+    <div class="cs-role">AI Revenue Architect</div>
+    <div class="metrics">
+      <div class="metric"><div class="v">6 weeks</div><div class="l">Concept to first client</div></div>
+      <div class="metric"><div class="v">+25%</div><div class="l">First client avg job value</div></div>
+      <div class="metric"><div class="v">Solo</div><div class="l">Built end to end</div></div>
+    </div>
+    <div class="car challenge"><h4>Challenge</h4><p>Small and mid-sized service businesses leave money on the table: weak local search visibility, dormant customer lists, and no system for raising average job value.</p></div>
+    <div class="car action"><h4>Action</h4><p>Built a revenue platform from the ground up, solo, with agentic AI running the full loop: local search visibility, customer-list reactivation, and pricing, at minimal manual oversight.</p></div>
+    <div class="car"><h4>Result</h4><p>Concept to first live client in six weeks. That client saw a 25% lift in average job value.</p></div>
+  </section>
+
+  <div class="foot">
+    <p>That's the detail. If it's a fit, let's talk.</p>
+    <a class="cta" href="mailto:jacobcharendoff@gmail.com">Email me</a>
+    <a class="alt" href="https://www.linkedin.com/in/jacob-charendoff/">Or connect on LinkedIn</a>
+  </div>
+</div>
+
+<script>
+(function(){
+  var FORM = "https://docs.google.com/forms/d/e/1FAIpQLSfSHnpK2JOySSdLmw6RGfbj8oy8eaQ3lIUtIMcFo3xfiXKBDQ/formResponse";
+  var F_NAME="entry.45288223", F_EMAIL="entry.117468317", F_COMPANY="entry.65741558";
+  var gate=document.getElementById('gate');
+  var content=document.getElementById('content');
+
+  function reveal(){ gate.classList.add('hidden'); content.classList.remove('hidden'); window.scrollTo(0,0); }
+
+  if(localStorage.getItem('pa_unlocked')==='1'){ reveal(); }
+
+  document.getElementById('gateForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var name=document.getElementById('g-name').value.trim();
+    var email=document.getElementById('g-email').value.trim();
+    var company=document.getElementById('g-company').value.trim();
+    var err=document.getElementById('gateErr');
+    if(!name || !email){ err.textContent="Name and email, please."; return; }
+    var btn=document.getElementById('gateBtn');
+    btn.disabled=true; btn.textContent="Unlocking…"; err.textContent="";
+    var body=new URLSearchParams();
+    body.append(F_NAME,name); body.append(F_EMAIL,email); body.append(F_COMPANY,company);
+    fetch(FORM,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:body})
+      .finally(function(){ localStorage.setItem('pa_unlocked','1'); reveal(); });
+  });
+})();
+</script>
+</body>
+</html>

@@ -31,16 +31,17 @@ body {
 .chat-bubble { user-select: text;
 }
 
-/* ══════════════════════════════════════
-   STAGE
-   ══════════════════════════════════════ */
+/* STAGE */
 .stage {
   flex: 1; display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
+  align-items: center;
   text-align: center;
   padding: 56px 48px 20px;
-  position: relative; overflow: hidden;
+  position: relative;
+  overflow-y: auto; overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
 }
+.stage::-webkit-scrollbar { width: 0; }
 .stage::before {
   content: '';
   position: absolute;
@@ -72,39 +73,34 @@ body {
 }
 .top-depth-indicator.show { opacity: 1; }
 
-/* ══════════════════════════════════════
-   CONTENT: morphs in place
-   ══════════════════════════════════════ */
+/* CONTENT */
 .content {
   display: flex; flex-direction: column;
   align-items: center; gap: 0;
   transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
   max-width: 800px; width: 100%;
+  margin: auto 0;
 }
 .content.slide-out-up { opacity: 0; transform: translateY(-30px); }
 .content.slide-out-down { opacity: 0; transform: translateY(30px); }
 
-/* Eyebrow */
 .eyebrow {
   font-size: 12px; font-weight: 600;
   letter-spacing: 2px; text-transform: uppercase;
   margin-bottom: 16px;
 }
 
-/* Headline */
 .headline {
   font-size: clamp(40px, 7vw, 88px);
   font-weight: 900; letter-spacing: -3px; line-height: 1.0;
   margin-bottom: 12px;
 }
 
-/* Role */
 .role {
   font-size: 16px; font-weight: 600;
   margin-bottom: 16px;
 }
 
-/* Description */
 .desc {
   font-size: clamp(15px, 1.5vw, 17px);
   color: var(--dim); line-height: 1.6;
@@ -112,7 +108,6 @@ body {
   margin-bottom: 24px;
 }
 
-/* Numbers row */
 .nums {
   display: flex; gap: 40px; justify-content: center;
   flex-wrap: wrap; margin-bottom: 8px;
@@ -127,7 +122,6 @@ body {
   font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px;
 }
 
-/* -- DEPTH PROMPT -- */
 .depth-prompt {
   margin-top: 20px;
   font-size: 13px; color: var(--dim);
@@ -144,7 +138,6 @@ body {
 }
 .depth-prompt.expanded .arrow { transform: rotate(180deg); }
 
-/* ── DETAIL VIEW (depth layer) ── */
 .detail {
   width: 100%; max-width: 700px;
   margin-top: 24px;
@@ -153,7 +146,7 @@ body {
   transition: max-height 0.5s cubic-bezier(0.25,1,0.5,1), opacity 0.4s ease;
 }
 .detail.open {
-  max-height: 500px; opacity: 1;
+  max-height: 700px; opacity: 1;
 }
 
 .detail-grid {
@@ -174,7 +167,6 @@ body {
   font-size: 13px; color: var(--dim); line-height: 1.55;
 }
 
-/* Before/After metrics */
 .detail-ba {
   display: flex; gap: 24px; margin-top: 16px;
   justify-content: center; flex-wrap: wrap;
@@ -192,7 +184,6 @@ body {
   letter-spacing: 0.5px; margin-top: 2px;
 }
 
-/* ── CTA ROW ── */
 .cta-row { display: flex; gap: 16px; margin-top: 24px; }
 .cta-pill {
   font-size: 14px; font-weight: 500; text-decoration: none;
@@ -202,7 +193,6 @@ body {
 .cta-primary:hover { opacity: 0.85; }
 .cta-ghost { color: var(--accent); border: 1px solid; background: transparent; }
 
-/* ── CHAPTER INTERSTITIAL ── */
 .interstitial-num {
   font-size: 11px; font-weight: 700; letter-spacing: 2px;
   margin-bottom: 12px;
@@ -211,9 +201,7 @@ body {
   width: 40px; height: 2px; margin: 0 auto 20px;
 }
 
-/* ══════════════════════════════════════
-   CHAT (iMessage-style interview)
-   ══════════════════════════════════════ */
+/* CHAT */
 .chat-container {
   position: absolute;
   top: 52px; bottom: 16px;
@@ -279,7 +267,6 @@ body {
   to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-/* Typing indicator */
 .typing-bubble {
   padding: 12px 18px;
 }
@@ -298,7 +285,6 @@ body {
   30% { transform: translateY(-5px); opacity: 1; }
 }
 
-/* Option pills */
 .chat-options {
   flex-shrink: 0;
   padding: 12px 4px 4px;
@@ -332,7 +318,6 @@ body {
   transform: scale(0.96);
 }
 
-/* Contact card at end of chat */
 .chat-contact-card {
   display: flex; flex-direction: column; gap: 8px;
   padding: 4px 0;
@@ -359,7 +344,6 @@ body {
 }
 .chat-contact-link.secondary:hover { background: rgba(255,255,255,0.1); }
 
-/* Chat input bar */
 .chat-input-bar {
   flex-shrink: 0;
   padding: 8px 4px 4px;
@@ -390,12 +374,9 @@ body {
 .chat-send:hover { opacity: 0.85; }
 .chat-send svg { width: 16px; height: 16px; fill: white; }
 
-/* Spacer between chat groups */
 .chat-spacer { height: 10px; flex-shrink: 0; }
 
-/* ══════════════════════════════════════
-   BOTTOM: progress + dots + hint
-   ══════════════════════════════════════ */
+/* BOTTOM */
 .bottom {
   padding: 12px 48px 20px;
   display: flex; flex-direction: column; align-items: center; gap: 12px;
@@ -436,7 +417,6 @@ body {
   font-size: 10px; color: var(--faint); letter-spacing: 0.5px;
 }
 
-/* ── SCROLL INDICATOR ── */
 .scroll-indicator {
   position: absolute; bottom: 80px; left: 50%;
   transform: translateX(-50%);
@@ -464,7 +444,6 @@ body {
   50% { transform: rotate(45deg) translateY(4px); }
 }
 
-/* ── FLOATING CHAT PILL ── */
 .chat-float {
   position: fixed; bottom: 100px; right: 32px;
   background: var(--accent); color: white;
@@ -485,7 +464,43 @@ body {
   transform: translateY(-2px);
 }
 
-/* ── FOCUS INDICATORS ── */
+.contact-row {
+  display: flex; gap: 20px; justify-content: center;
+  flex-wrap: wrap; margin-bottom: 16px;
+  user-select: text;
+}
+.contact-link {
+  font-size: 13px; color: var(--dim);
+  text-decoration: none; font-weight: 500;
+  transition: color 0.2s;
+  letter-spacing: 0.3px;
+}
+.contact-link:hover { color: var(--text); }
+.contact-sep { color: var(--faint); font-size: 13px; user-select: none; }
+
+.nav-cards {
+  display: flex; gap: 8px; flex-wrap: wrap;
+  justify-content: center; margin-top: 20px;
+}
+.nav-card {
+  font-size: 12px; font-weight: 600;
+  padding: 10px 20px; border-radius: 980px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.03);
+  color: var(--dim); cursor: pointer;
+  transition: all 0.2s; font-family: var(--font);
+}
+.nav-card:hover {
+  background: rgba(255,255,255,0.08);
+  color: var(--text);
+  border-color: rgba(255,255,255,0.2);
+}
+.nav-card.accent {
+  background: var(--accent); color: white;
+  border-color: var(--accent);
+}
+.nav-card.accent:hover { opacity: 0.85; }
+
 .chapter-dot:focus-visible,
 .chat-option-pill:focus-visible,
 .depth-prompt:focus-visible,
@@ -500,28 +515,26 @@ body {
   outline: none;
 }
 
-/* ── PROGRESS BAR HOVER ── */
 .progress-track:hover .progress-fill { filter: brightness(1.2); }
 .progress-track:hover { height: 4px; margin-top: -1px; }
 
-/* ── ENTRANCE ANIMATION ── */
 .stage.loading .content { opacity: 0; }
 .entrance-eyebrow { animation: entranceFade 0.6s 0.2s ease both; }
 .entrance-headline { animation: entranceFade 0.7s 0.35s ease both; }
-.entrance-desc { animation: entranceFade 0.6s 0.55s ease both; }
-.entrance-nums { animation: entranceFade 0.6s 0.7s ease both; }
-.entrance-depth { animation: entranceFade 0.5s 0.85s ease both; }
+.entrance-contact { animation: entranceFade 0.6s 0.45s ease both; }
+.entrance-desc { animation: entranceFade 0.6s 0.6s ease both; }
+.entrance-nums { animation: entranceFade 0.6s 0.75s ease both; }
+.entrance-nav { animation: entranceFade 0.6s 0.9s ease both; }
+.entrance-depth { animation: entranceFade 0.5s 1.0s ease both; }
 @keyframes entranceFade {
   from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* ── TOUCH FEEDBACK ── */
 .content.touch-dragging {
   transition: none;
 }
 
-/* ── MOBILE ── */
 @media (max-width: 700px) {
   .stage { padding: 56px 24px 16px; }
   .top, .bottom { padding-left: 24px; padding-right: 24px; }
@@ -535,6 +548,10 @@ body {
   .chapter-dot { font-size: 9px; padding: 3px 6px; }
   .chat-float { right: 20px; bottom: 90px; font-size: 12px; padding: 8px 16px; }
   .scroll-indicator { bottom: 70px; }
+  .nav-cards { gap: 6px; }
+  .nav-card { font-size: 11px; padding: 8px 14px; }
+  .contact-row { gap: 12px; }
+  .contact-link { font-size: 12px; }
 }
 @media (max-width: 400px) {
   .chapter-dot.compact-hide { display: none; }
@@ -547,8 +564,9 @@ body {
 
 <div class="stage" id="stage">
   <div class="top">
-    <div class="top-name">Jacob Charendoff</div>
+    <div class="top-name" style="cursor:pointer" onclick="goTo(0)">Jacob Charendoff</div>
     <div class="top-right">
+      <a href="case-studies.html" style="font-size:12px;font-weight:600;letter-spacing:.3px;color:var(--accent);text-decoration:none;border:1px solid rgba(41,151,255,0.4);padding:5px 12px;border-radius:8px;">Case Studies &#8594;</a>
       <div class="top-depth-indicator" id="depthIndicator">DETAIL VIEW</div>
       <div class="top-chapter" id="chapterLabel"></div>
     </div>
@@ -558,8 +576,10 @@ body {
     <div class="eyebrow" id="eyebrow"></div>
     <h1 class="headline" id="headline"></h1>
     <div class="role" id="role"></div>
+    <div class="contact-row" id="contactRow"></div>
     <p class="desc" id="desc"></p>
     <div class="nums" id="nums"></div>
+    <div class="nav-cards" id="navCards"></div>
     <div class="depth-prompt" id="depthPrompt" onclick="toggleDepth()">
       <span class="arrow">&#9660;</span> <span id="depthPromptText">Go deeper</span>
     </div>
@@ -567,13 +587,11 @@ body {
     <div class="cta-row" id="ctaRow"></div>
   </div>
 
-  <!-- SCROLL INDICATOR -->
   <div class="scroll-indicator" id="scrollIndicator" onclick="next()">
     <span class="scroll-indicator-text">Scroll to explore</span>
     <div class="scroll-indicator-chevron"></div>
   </div>
 
-  <!-- CHAT INTERFACE -->
   <div class="chat-container" id="chatContainer">
     <div class="chat-header">
       <div class="chat-avatar">JC</div>
@@ -593,7 +611,7 @@ body {
   </div>
 </div>
 
-<button class="chat-float" id="chatFloat" onclick="goTo(slides.length - 1)">Chat with me</button>
+<button class="chat-float" id="chatFloat" onclick="goTo(slides.length - 1)">Start a Virtual Interview</button>
 
 <div class="bottom">
   <div class="progress-track" id="progressTrack">
@@ -606,340 +624,252 @@ body {
 </div>
 
 <script>
-// ══════════════════════════════════════
-// SLIDE DATA
-// ══════════════════════════════════════
-var slides = [
-  // ── INTRO ──
+const slides = [
   {
     type: 'intro',
-    eyebrow: 'Revenue & Growth Operator',
-    headline: '$70M+ Revenue.\nBuilt from zero.',
+    eyebrow: 'Revenue & Growth Leader',
+    headline: 'Jacob\nCharendoff',
     role: '',
-    desc: 'Five companies. Three exits. Twelve years of building the commercial engine that makes everything else possible.',
+    desc: 'I build the commercial systems that turn ambition into pipeline, pipeline into revenue, and revenue into exits.',
     nums: [
-      { val: '$70M+', label: 'Revenue' },
+      { val: '12+', label: 'Years' },
       { val: '3', label: 'Exits' },
-      { val: '$28M+', label: 'Exit Value' },
-      { val: '12+', label: 'Years' }
+      { val: '4', label: 'Industries' }
     ],
     color: '#2997ff',
     label: 'Intro',
     group: 0
   },
 
-  // ── CHAPTER 1 INTERSTITIAL ──
   {
     type: 'chapter',
     eyebrow: 'CHAPTER 01',
     headline: 'The Operator\n& Founder Years',
     role: '',
-    desc: 'Eight years inside the machine. Built revenue infrastructure for a family office portfolio, then built my own company and exited it.',
+    desc: 'Hired pre-revenue at a family-backed portfolio. Climbed from the first sales hire to VP. Built a company on the side and sold it. Eight years learning what makes businesses actually grow.',
     nums: [],
     color: '#ff9f0a',
     label: 'Ch. 1',
     group: 1
   },
 
-  // ── BERMAN ──
   {
     type: 'company',
-    eyebrow: '2014 - 2022 / 8 Years',
+    eyebrow: '2014 - 2022 / Manager → VP',
     headline: 'Berman\nVentures',
-    role: 'VP Revenue & Growth',
-    desc: 'First hire. Three promotions. Built revenue infrastructure for every company in a family office portfolio across hospitality and health tech.',
+    role: 'Sales & Mktg Mgr → Dir. Ops → VP Revenue & Growth',
+    desc: 'Employee #1. Hired pre-revenue to build the commercial engine for a portfolio spanning hospitality and health tech. Climbed from the first sales hire to VP over eight years. Both portfolio companies exited.',
     nums: [
-      { val: '$28M+', label: 'Exits' },
-      { val: '9 → 50+', label: 'Team' },
-      { val: '3', label: 'Promotions' }
+      { val: '9 → 50+', label: 'Team Built' },
+      { val: '2', label: 'Companies Exited' },
+      { val: '8 yrs', label: 'Manager → VP' }
     ],
     color: '#ff9f0a',
     label: 'Berman',
     group: 1,
     detail: {
       cells: [
-        { label: 'The Challenge', text: 'Joined as first hire at a family office with a portfolio spanning hospitality and health tech. No revenue infrastructure, no playbook, no commercial team beyond the founders.', color: '#ff6b6b' },
-        { label: 'What I Built', text: 'Revenue systems for every portfolio company. Hiring and enablement processes. Commercial due diligence and investor reporting frameworks. Scaled the entire organization.', color: '#ff9f0a' },
-        { label: 'The Outcome', text: 'Three promotions in 8 years. $28M+ in combined exits across two portfolio companies. Built the commercial engine that made those exits possible.', color: '#30d158' }
+        { label: 'The Progression', text: 'Started as the first commercial hire. Built the first CRM from scratch, generated revenue through outbound and direct sales, and grew the business to its first seven figures. Promoted to Director of Operations to stabilize delivery as revenue tripled, then to VP, Revenue & Growth across both portfolio companies.', color: '#ff9f0a' },
+        { label: 'What I Owned', text: 'Pricing, forecasting, and demand planning across both businesses. Led the ground-up commercial build for StarDome Peru, turning a seasonal hospitality concept into a real revenue operation. Restructured packaging across both companies to smooth seasonality and survive buyer scrutiny.', color: '#5ac8fa' },
+        { label: 'The Outcome', text: 'Both portfolio companies exited. Scaled the organization from 9 to 50+ and built the revenue infrastructure, commercial team, and forecasting discipline that gave buyers confidence. The numbers behind each exit are in the detailed case studies.', color: '#30d158' }
       ],
-      ba: [
-        { before: '9', after: '50+', label: 'Team Size' },
-        { before: 'None', after: 'Full Stack', label: 'Revenue Infra' },
-        { before: '$0', after: '$28M+', label: 'Exit Value' }
-      ]
+      ba: []
     }
   },
 
-  // ── TRD ──
   {
     type: 'company',
-    eyebrow: '2019 - 2023 / Founded',
+    eyebrow: '2022 - 2025 / Founded & Exited',
     headline: 'The Rig\nDoctor',
-    role: 'Founder & CEO',
-    desc: 'Started while still at Berman. DTC e-commerce from zero to $3.5M across two countries. 30K owned audience. Team of 12. Exited at 4x EBITDA.',
+    role: 'Co-Founder',
+    desc: 'Built a DTC e-commerce business from zero to exit across Canada and the US. Full P&L ownership. A 30K owned audience that became the primary revenue channel. Sold the business.',
     nums: [
-      { val: '$3.5M', label: 'Revenue' },
-      { val: '-60%', label: 'CAC' },
-      { val: '4x', label: 'EBITDA Exit' }
+      { val: 'Zero → Exit', label: 'In Two Years' },
+      { val: 'Team of 12', label: 'Two Countries' },
+      { val: '30K', label: 'Owned Audience' }
     ],
     color: '#ffd60a',
     label: 'TRD',
     group: 1,
     detail: {
       cells: [
-        { label: 'The Challenge', text: 'Started as a side project while still VP at Berman. DTC e-commerce in a niche market. No existing playbook, no team, no funding.', color: '#ff6b6b' },
-        { label: 'What I Built', text: 'Full commercial stack: CRM, pricing, lead scoring, retention, analytics. Shifted from paid to owned audience (30K). Built team of 12. Full P&L ownership.', color: '#ffd60a' },
-        { label: 'The Outcome', text: '$3.5M revenue across two countries. Cut CAC by 60% through owned channels. Exited at 4x EBITDA in 2023.', color: '#30d158' }
+        { label: 'The Build', text: 'Founded while still VP at Berman. DTC e-commerce in a niche market (guitar gear). No funding, no team, no playbook. Built it nights and weekends until it demanded full attention.', color: '#ff6b6b' },
+        { label: 'What I Owned', text: 'Everything. Full P&L. Pricing strategy, product bundling, lifecycle optimization. Built a repeatable acquisition model and fixed unit economics at every stage. Grew a 30K owned audience that became the primary revenue channel, cutting dependence on paid. Team of 12 across fulfillment, content, and customer experience.', color: '#ffd60a' },
+        { label: 'The Exit', text: 'Grew it across two countries and led the majority stake sale, converting founder-led growth into a clean exit. The revenue, margin, and multiple are in the detailed case studies.', color: '#30d158' }
       ],
-      ba: [
-        { before: '$0', after: '$3.5M', label: 'Revenue' },
-        { before: 'High', after: '-60%', label: 'CAC' },
-        { before: 'Just me', after: '12', label: 'Team' }
-      ]
+      ba: []
     }
   },
 
-  // ── CHAPTER 2 INTERSTITIAL ──
   {
     type: 'chapter',
     eyebrow: 'CHAPTER 02',
-    headline: 'The Consulting\n& Advisory Phase',
+    headline: 'Leading Revenue\nat Scale',
     role: '',
-    desc: 'Took what I learned building and exiting companies and applied it to organizations that needed the same thing built from scratch.',
+    desc: 'After two exits, took the playbook into larger organizations. Head of Revenue at a high-growth SaaS company. Built AI-driven revenue tooling for businesses that needed commercial infrastructure from scratch.',
     nums: [],
     color: '#bf5af2',
     label: 'Ch. 2',
     group: 2
   },
 
-  // ── VERIFAST ──
   {
     type: 'company',
-    eyebrow: '2025 - 2026 / $36M ARR SaaS',
+    eyebrow: 'Sep 2025 - May 2026 / B2B SaaS',
     headline: 'Verifast',
-    role: 'Revenue Operations Consultant',
-    desc: '50+ sellers, no CRM, no pipeline, no forecast. Built the entire revenue operating system from scratch. HubSpot, Gong, Looker.',
+    role: 'Contract Head of Revenue',
+    desc: 'Brought in by the CEO to own the full revenue function across Sales, Marketing, and Customer Success, and rebuild a GTM system that was leaking revenue between stages.',
     nums: [
-      { val: '55→91%', label: 'Data Quality' },
-      { val: '90%+', label: 'Forecast' },
-      { val: '-82%', label: 'Reporting' }
+      { val: '30-person', label: 'Revenue Org' },
+      { val: 'Sales · Mktg · CS', label: 'Owned the Number' },
+      { val: 'GTM', label: 'Rebuilt End to End' }
     ],
     color: '#5ac8fa',
     label: 'Verifast',
     group: 2,
     detail: {
       cells: [
-        { label: 'The Challenge', text: '50+ sellers, no CRM, no pipeline visibility, no forecast. Execs spending 5+ hrs/wk stitching spreadsheets together. Data quality at 55%.', color: '#ff6b6b' },
-        { label: 'What I Built', text: 'Full HubSpot ecosystem from scratch: custom pipelines, lead scoring, attribution, automated workflows. Deployed Gong for conversation intel and Looker for BI. Trained the entire sales org.', color: '#5ac8fa' },
-        { label: 'The Outcome', text: 'Pipeline data quality: 55% to 91%. Forecast accuracy: guesswork to 90%+. Exec reporting: 5 hrs/wk to 55 min. Full revenue OS running in under a year.', color: '#30d158' }
+        { label: 'The Situation', text: 'A high-growth B2B SaaS platform with revenue leaking between stages. Pipeline, forecast, and handoffs each breaking in their own way, and leadership unable to trust the number.', color: '#ff6b6b' },
+        { label: 'What I Built', text: 'Rebuilt the GTM system end to end: standardized stages, deal-review discipline, a clean revenue data model, a fixed Sales-to-Onboarding handoff, and a weekly revenue cadence the leadership team could plan against.', color: '#5ac8fa' },
+        { label: 'The Results', text: 'Owned the number across a 30-person org and drove a year of strong growth, with retention and forecast accuracy to match. The full metrics are in the detailed case studies.', color: '#30d158' }
       ],
-      ba: [
-        { before: '55%', after: '91%', label: 'Data Quality' },
-        { before: 'None', after: '90%+', label: 'Forecast' },
-        { before: '5 hrs/wk', after: '55 min', label: 'Reporting' }
-      ]
+      ba: []
     }
   },
 
-  // ── CNIB ──
   {
     type: 'company',
     eyebrow: '2024 - Present / Pro Bono',
-    headline: 'CNIB',
-    role: 'iris. + Venture Collective',
-    desc: 'Designed an agentic AI member engagement platform for Canada\'s largest sight loss organization. Built a 6-month entrepreneur accelerator for blind founders.',
+    headline: 'CNIB\nFoundation',
+    role: 'Creator & Lead Instructor, The Venture Collective',
+    desc: 'Designed and teach The Venture Collective, an entrepreneurship accelerator for blind, Deafblind, and low-vision founders across Canada. Also host the Know Your Rights podcast.',
     nums: [
-      { val: '150+', label: 'Edge Cases' },
-      { val: '40+', label: 'Routes' },
-      { val: '6', label: 'Personas' }
+      { val: 'The Venture Collective', label: 'Built & Teach It' },
+      { val: 'Pro Bono', label: 'For My Community' }
     ],
     color: '#bf5af2',
     label: 'CNIB',
     group: 2,
     detail: {
       cells: [
-        { label: 'The Challenge', text: 'CNIB needed two things: a way to scale member engagement beyond human capacity, and a pipeline for blind entrepreneurs. No existing product for either.', color: '#ff6b6b' },
-        { label: 'What I Built', text: 'iris.: full agentic AI platform with 6 persona flows, 40+ service routing, 150+ edge cases, crisis protocols. Venture Collective: 6-month accelerator from mindset to first dollar.', color: '#bf5af2' },
-        { label: 'The Outcome', text: 'Two complete products delivered pro bono. iris. ready for pilot deployment. Venture Collective curriculum complete with live judging panel.', color: '#30d158' }
+        { label: 'Why This Matters', text: 'I have Stargardt\'s disease. I\'m part of the community CNIB serves, so this work is personal. Blind founders had no structured path from idea to first dollar.', color: '#ff6b6b' },
+        { label: 'What I Built', text: 'The Venture Collective: an accelerator I designed and teach, taking blind, Deafblind, and low-vision founders from mindset to a live pitch, with a curriculum spanning financial modeling, go-to-market, pricing, and operations. I also host the Know Your Rights podcast on accessibility and lived experience.', color: '#bf5af2' },
+        { label: 'The Impact', text: 'Graduated the first cohort into a live pitch competition, each founder leaving with a validated model. Now a flagship CNIB program with a second cohort in planning, delivered entirely pro bono.', color: '#30d158' }
       ],
       ba: []
     }
   },
 
-  // ── EVERLABS ──
   {
     type: 'company',
-    eyebrow: '2023 / Health Tech',
+    eyebrow: '2024 - 2025 / Health Tech',
     headline: 'Everlabs',
-    role: 'AI Consultant',
-    desc: 'Built the business model and agentic AI platform for an emerging health tech company. Revenue model, pricing architecture, and full GTM delivered.',
+    role: 'Business & Revenue Design',
+    desc: 'Took an early-stage health tech company from lab to market: built the business case, the revenue model, the go-to-market, and an MVP product built on agentic AI, then handed it to the exec team.',
     nums: [
-      { val: 'Agentic AI', label: 'Platform' },
-      { val: 'Full GTM', label: 'Delivered' }
+      { val: 'Lab → Market', label: 'Commercial Engine' },
+      { val: 'Agentic AI', label: 'MVP Shipped' }
     ],
     color: '#30d158',
     label: 'Everlabs',
     group: 2,
     detail: {
       cells: [
-        { label: 'The Challenge', text: 'Early-stage health tech startup with the science but no commercial engine. No business model, no revenue architecture, no GTM.', color: '#ff6b6b' },
-        { label: 'What I Built', text: 'Agentic AI platform aggregating multi-source health data matched to personalized recommendations. Revenue model, pricing architecture, full GTM strategy.', color: '#30d158' },
-        { label: 'The Outcome', text: 'Tech developed and deployed as working beta with real users. Complete business model delivered. Company positioned for fundraise.', color: '#30d158' }
+        { label: 'The Problem', text: 'Strong science and a working prototype, but zero commercial infrastructure. No business model, no pricing, no path from "this works in a lab" to "someone will pay for this."', color: '#ff6b6b' },
+        { label: 'What I Built', text: 'The full commercial architecture from the ground up: business case, revenue model, pricing, and a go-to-market playbook. On the product side, scoped and delivered an MVP built on agentic AI.', color: '#30d158' },
+        { label: 'Where It Landed', text: 'Handed the full commercial framework and MVP to the executive team to operate, closing the gap between "we have the tech" and "here\'s how it makes money."', color: '#30d158' }
       ],
       ba: []
     }
   },
 
-  // ── CHAT (replaces old contact slide) ──
   {
     type: 'chat',
     eyebrow: '', headline: '', role: '', desc: '',
     nums: [],
     color: '#2997ff',
-    label: 'Interview',
+    label: 'Virtual Interview',
     group: 3
   }
 ];
 
-// ══════════════════════════════════════
-// CHAT CONVERSATION TREE
-// ══════════════════════════════════════
-var chatTree = {
-  start: {
-    jacob: "Hey. You made it through the whole thing. That means you're either curious or hiring. Either way, ask me anything.",
-    options: [
-      { text: "What are you looking for right now?", next: 'looking_for' },
-      { text: "First 90 days at a new company?", next: 'ninety_days' },
-      { text: "Why should we hire you?", next: 'why_you' }
-    ]
-  },
-  looking_for: {
-    jacob: "VP or C-suite. Full ownership of the revenue engine. I want a company past product-market fit that hasn't figured out how to make money predictably yet. Series B or later, $10M to $100M ARR. I'm not chasing a title. I'm looking for the problem I've solved five times.",
-    options: [
-      { text: "What would your first 90 days look like?", next: 'ninety_days' },
-      { text: "Tell me about a time it didn't work", next: 'failure' },
-      { text: "Let's connect →", next: 'contact' }
-    ]
-  },
-  ninety_days: {
-    jacob: "Week one I'm in the CRM, the data, the pipeline. I want to see where revenue is leaking before anyone tells me the narrative. Weeks two through four I'm with every seller, CS rep, and marketing lead. Not auditing. Understanding what's actually happening versus what the dashboards say. By day 60 I have the architecture mapped and first fixes live. By 90 the forecast works.",
-    options: [
-      { text: "What's your management style?", next: 'management' },
-      { text: "Why you over someone else?", next: 'why_you' },
-      { text: "Let's connect →", next: 'contact' }
-    ]
-  },
-  why_you: {
-    jacob: "I've done this five times and it worked every time. Not in theory. In pipeline, in revenue, in exits. Most people interviewing for these roles managed a system someone else built. I build the system. That's a different skill and it's harder to find.",
-    options: [
-      { text: "Tell me about a failure", next: 'failure' },
-      { text: "What kind of company fits you best?", next: 'company_fit' },
-      { text: "Let's connect →", next: 'contact' }
-    ]
-  },
-  failure: {
-    jacob: "The Rig Doctor. I held on six months too long before selling. I was emotionally attached to something I'd built and it cost me margin on the exit. Still got 4x EBITDA, but I left money on the table because I couldn't separate the founder from the operator. That's the lesson I carry now. The numbers tell you when to move. Listen to them.",
-    options: [
-      { text: "What's your management style?", next: 'management' },
-      { text: "Let's connect →", next: 'contact' }
-    ]
-  },
-  management: {
-    jacob: "I hire people who are better than me at their specific thing. Give them the system, the targets, and the room to run. I set the commercial architecture and the cadence, make sure the data is clean, and get out of the way. When something breaks I'm in the weeds until it's fixed. Otherwise I'm building the next thing.",
-    options: [
-      { text: "What kind of company fits you?", next: 'company_fit' },
-      { text: "Let's connect →", next: 'contact' }
-    ]
-  },
-  company_fit: {
-    jacob: "Somewhere between 'figured out the product' and 'figured out how to sell it.' That gap is where I live. I need a founder or exec team that knows they need commercial infrastructure but hasn't built it yet. Not a turnaround. A build.",
-    options: [
-      { text: "What would your first 90 days look like?", next: 'ninety_days' },
-      { text: "Let's connect →", next: 'contact' }
-    ]
-  },
-  contact: {
-    jacob: "Let's do it.",
-    isEnd: true
-  }
-};
+var suggestedStarters = [
+  "What are you looking for right now?",
+  "Walk me through your first 90 days",
+  "Why should we hire you?"
+];
+var followUpSets = [
+  ["Tell me about a failure", "What's your management style?", "Let's connect →"],
+  ["What kind of company fits you?", "How do you build a revenue team?", "Let's connect →"],
+  ["Tell me about your exits", "What's your tech stack?", "Let's connect →"]
+];
+var followUpIndex = 0;
 
-// ══════════════════════════════════════
-// STATE
-// ══════════════════════════════════════
-var current = 0;
-var depthOpen = false;
-var transitioning = false;
-var chatActive = false;
-var chatVisited = new Set();
-var scrollAccum = 0;
-var scrollTimer = null;
+let current = 0;
+let depthOpen = false;
+let transitioning = false;
+let chatActive = false;
+let scrollAccum = 0;
+let scrollTimer = null;
 
-var content = document.getElementById('content');
-var eyebrow = document.getElementById('eyebrow');
-var headline = document.getElementById('headline');
-var role = document.getElementById('role');
-var desc = document.getElementById('desc');
-var nums = document.getElementById('nums');
-var ctaRow = document.getElementById('ctaRow');
-var detail = document.getElementById('detail');
-var depthPrompt = document.getElementById('depthPrompt');
-var depthPromptText = document.getElementById('depthPromptText');
-var depthIndicator = document.getElementById('depthIndicator');
-var chapterLabel = document.getElementById('chapterLabel');
-var progressFill = document.getElementById('progressFill');
-var progressDot = document.getElementById('progressDot');
-var chapterDots = document.getElementById('chapterDots');
-var progressTrack = document.getElementById('progressTrack');
-var navHint = document.getElementById('navHint');
-var chatContainer = document.getElementById('chatContainer');
-var chatThread = document.getElementById('chatThread');
-var chatOptions = document.getElementById('chatOptions');
-var chatInput = document.getElementById('chatInput');
-var chatSend = document.getElementById('chatSend');
+const content = document.getElementById('content');
+const eyebrow = document.getElementById('eyebrow');
+const headline = document.getElementById('headline');
+const role = document.getElementById('role');
+const desc = document.getElementById('desc');
+const nums = document.getElementById('nums');
+const ctaRow = document.getElementById('ctaRow');
+const detail = document.getElementById('detail');
+const depthPrompt = document.getElementById('depthPrompt');
+const depthPromptText = document.getElementById('depthPromptText');
+const depthIndicator = document.getElementById('depthIndicator');
+const chapterLabel = document.getElementById('chapterLabel');
+const progressFill = document.getElementById('progressFill');
+const progressDot = document.getElementById('progressDot');
+const chapterDots = document.getElementById('chapterDots');
+const progressTrack = document.getElementById('progressTrack');
+const navHint = document.getElementById('navHint');
+const chatContainer = document.getElementById('chatContainer');
+const chatThread = document.getElementById('chatThread');
+const chatOptions = document.getElementById('chatOptions');
+const chatInput = document.getElementById('chatInput');
+const chatSend = document.getElementById('chatSend');
 
-// ══════════════════════════════════════
-// BUILD DOTS
-// ══════════════════════════════════════
-var lastGroup = -1;
-slides.forEach(function(s, i) {
+let lastGroup = -1;
+slides.forEach((s, i) => {
   if (s.group !== lastGroup && lastGroup !== -1) {
-    var div = document.createElement('div');
+    const div = document.createElement('div');
     div.className = 'dot-divider';
     chapterDots.appendChild(div);
   }
   lastGroup = s.group;
-  var dot = document.createElement('div');
+  const dot = document.createElement('div');
   dot.className = 'chapter-dot';
   dot.textContent = s.label;
   dot.dataset.index = i;
   dot.setAttribute('tabindex', '0');
   dot.setAttribute('role', 'button');
-  dot.addEventListener('click', function() { goTo(i); });
-  dot.addEventListener('keydown', function(e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); goTo(i); } });
+  dot.addEventListener('click', () => goTo(i));
+  dot.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); goTo(i); } });
   chapterDots.appendChild(dot);
 });
 
-// ══════════════════════════════════════
-// RENDER
-// ══════════════════════════════════════
-var lastIndex = 0;
-function render(index, animate) {
-  if (animate === undefined) animate = true;
-  var s = slides[index];
+let lastIndex = 0;
+function render(index, animate = true) {
+  const s = slides[index];
   depthOpen = false;
-  var direction = index >= lastIndex ? 'up' : 'down';
+  const direction = index >= lastIndex ? 'up' : 'down';
   lastIndex = index;
 
   if (animate) {
     transitioning = true;
-    var outClass = direction === 'up' ? 'slide-out-up' : 'slide-out-down';
+    const outClass = direction === 'up' ? 'slide-out-up' : 'slide-out-down';
     content.classList.add(outClass);
     if (chatActive) chatContainer.classList.remove('active');
 
-    setTimeout(function() {
+    setTimeout(() => {
       content.classList.remove(outClass);
-      var inClass = direction === 'up' ? 'slide-out-down' : 'slide-out-up';
+      const inClass = direction === 'up' ? 'slide-out-down' : 'slide-out-up';
       content.classList.add(inClass);
       fillContent(s);
 
@@ -947,24 +877,24 @@ function render(index, animate) {
       if (s.type !== 'chat') {
         content.classList.remove(inClass);
       }
-      setTimeout(function() { transitioning = false; }, 350);
+      setTimeout(() => { transitioning = false; }, 350);
     }, 300);
   } else {
     fillContent(s);
   }
 
-  var pct = (index / (slides.length - 1)) * 100;
+  const pct = (index / (slides.length - 1)) * 100;
   progressFill.style.width = pct + '%';
   progressFill.style.background = s.color;
   progressDot.style.background = s.color;
 
-  document.querySelectorAll('.chapter-dot').forEach(function(d) {
-    var di = parseInt(d.dataset.index);
+  document.querySelectorAll('.chapter-dot').forEach(d => {
+    const di = parseInt(d.dataset.index);
     d.classList.toggle('active', di === index);
     d.style.background = di === index ? s.color : '';
   });
 
-  chapterLabel.textContent = (index + 1) + ' / ' + slides.length;
+  chapterLabel.textContent = s.label || '';
 
   if (typeof updateOverlays === 'function') updateOverlays();
 
@@ -996,15 +926,47 @@ function fillContent(s) {
   role.style.color = s.color;
   role.style.display = s.role ? '' : 'none';
 
+  var contactRow = document.getElementById('contactRow');
+  if (s.type === 'intro') {
+    contactRow.style.display = 'flex';
+    contactRow.innerHTML = '<a href="mailto:jacobcharendoff@gmail.com" class="contact-link">jacobcharendoff@gmail.com</a>' +
+      '<span class="contact-sep">·</span>' +
+      '<a href="tel:+16476802324" class="contact-link">(647) 680-2324</a>' +
+      '<span class="contact-sep">·</span>' +
+      '<a href="https://linkedin.com/in/jacob-charendoff" target="_blank" class="contact-link">LinkedIn</a>';
+  } else {
+    contactRow.style.display = 'none';
+    contactRow.innerHTML = '';
+  }
+
   desc.textContent = s.desc;
 
   nums.innerHTML = '';
-  s.nums.forEach(function(n) {
-    var block = document.createElement('div');
+  s.nums.forEach(n => {
+    const block = document.createElement('div');
     block.className = 'num-block';
-    block.innerHTML = '<div class="num-val" style="color:' + s.color + '">' + n.val + '</div><div class="num-label">' + n.label + '</div>';
+    block.innerHTML = `<div class="num-val" style="color:${s.color}">${n.val}</div><div class="num-label">${n.label}</div>`;
     nums.appendChild(block);
   });
+
+  var navCardsEl = document.getElementById('navCards');
+  if (s.type === 'intro') {
+    navCardsEl.style.display = 'flex';
+    navCardsEl.innerHTML = '';
+    var exploreBtn = document.createElement('button');
+    exploreBtn.className = 'nav-card';
+    exploreBtn.textContent = 'Walk Through My Career ↓';
+    exploreBtn.addEventListener('click', function() { next(); });
+    navCardsEl.appendChild(exploreBtn);
+    var interviewBtn = document.createElement('button');
+    interviewBtn.className = 'nav-card accent';
+    interviewBtn.textContent = 'Start a Virtual Interview';
+    interviewBtn.addEventListener('click', function() { goTo(slides.length - 1); });
+    navCardsEl.appendChild(interviewBtn);
+  } else {
+    navCardsEl.style.display = 'none';
+    navCardsEl.innerHTML = '';
+  }
 
   if (s.type === 'company' && s.detail) {
     depthPrompt.style.display = 'flex';
@@ -1020,37 +982,40 @@ function fillContent(s) {
 
   ctaRow.innerHTML = '';
   if (s.cta) {
-    s.cta.forEach(function(c) {
-      var a = document.createElement('a');
+    s.cta.forEach(c => {
+      const a = document.createElement('a');
       a.href = c.href;
       a.className = 'cta-pill ' + (c.primary ? 'cta-primary' : 'cta-ghost');
       a.textContent = c.text;
-      if (!c.primary && c.href.indexOf('http') === 0) a.target = '_blank';
+      if (!c.primary && c.href.startsWith('http')) a.target = '_blank';
       ctaRow.appendChild(a);
     });
   }
 
-  if (s.type === 'company' && s.detail) {
+  if (s.type === 'intro') {
+    navHint.textContent = 'Jump to a section above, or scroll to explore';
+  } else if (s.type === 'company' && s.detail) {
     navHint.textContent = 'Scroll to navigate · Click "Go deeper" for the full story';
   } else {
     navHint.textContent = 'Scroll or use arrow keys to navigate';
   }
 }
 
-// ══════════════════════════════════════
-// CHAT ENGINE
-// ══════════════════════════════════════
+var CHAT_API_URL = 'https://portfolio-chat-api-flax.vercel.app/api/chat';
+var conversationHistory = [];
+var chatLocked = false;
+
 function startChat() {
-  chatVisited.clear();
   chatThread.innerHTML = '';
   chatOptions.innerHTML = '';
   chatOptions.classList.remove('visible');
   conversationHistory = [];
+  chatLocked = false;
 
   setTimeout(function() {
     showTyping(function() {
-      addMessage('jacob', chatTree.start.jacob);
-      setTimeout(function() { showChatOptions(chatTree.start.options); }, 300);
+      addMessage('jacob', "Hey - Jacob here. What do you want to know?");
+      setTimeout(function() { showSuggestions(suggestedStarters); }, 300);
     });
   }, 400);
 }
@@ -1069,59 +1034,92 @@ function showTyping(callback) {
   typing.innerHTML = '<div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>';
   chatThread.appendChild(typing);
   scrollChat();
-
   var dur = 800 + Math.random() * 600;
-  setTimeout(function() {
-    typing.remove();
-    callback();
-  }, dur);
+  setTimeout(function() { typing.remove(); callback(); }, dur);
 }
 
 function scrollChat() {
-  requestAnimationFrame(function() {
-    chatThread.scrollTop = chatThread.scrollHeight;
-  });
+  requestAnimationFrame(function() { chatThread.scrollTop = chatThread.scrollHeight; });
 }
 
-function showChatOptions(options) {
+function showSuggestions(prompts) {
   chatOptions.innerHTML = '';
   chatOptions.classList.remove('visible');
-
-  var filtered = options.filter(function(o) { return o.next === 'contact' || !chatVisited.has(o.next); });
-  var toShow = filtered.length > 0 ? filtered : [{ text: "Let's connect →", next: 'contact' }];
-
-  toShow.forEach(function(opt) {
+  prompts.forEach(function(text) {
     var pill = document.createElement('button');
     pill.className = 'chat-option-pill';
-    pill.textContent = opt.text;
-    pill.addEventListener('click', function() { handleChatOption(opt); });
+    pill.textContent = text;
+    pill.addEventListener('click', function() { sendChatMessage(text); });
     chatOptions.appendChild(pill);
   });
-
   setTimeout(function() { chatOptions.classList.add('visible'); }, 60);
 }
 
-function handleChatOption(opt) {
+function sendChatMessage(text) {
+  if (chatLocked) return;
+
+  if (text === "Let's connect →") {
+    chatOptions.classList.remove('visible');
+    setTimeout(function() { chatOptions.innerHTML = ''; }, 300);
+    setTimeout(function() {
+      addMessage('visitor', text);
+      setTimeout(function() {
+        showTyping(function() {
+          addMessage('jacob', "Let's do it.");
+          setTimeout(function() { showContactCard(); }, 400);
+        });
+      }, 200);
+    }, 100);
+    return;
+  }
+
+  chatLocked = true;
   chatOptions.classList.remove('visible');
   setTimeout(function() { chatOptions.innerHTML = ''; }, 300);
+  chatInput.value = '';
+  chatInput.disabled = true;
+  chatSend.disabled = true;
 
   setTimeout(function() {
-    addMessage('visitor', opt.text);
-    chatVisited.add(opt.next);
+    addMessage('visitor', text);
+    conversationHistory.push({ role: 'user', content: text });
 
-    var node = chatTree[opt.next];
+    var typing = document.createElement('div');
+    typing.className = 'chat-bubble chat-jacob typing-bubble';
+    typing.innerHTML = '<div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>';
+    chatThread.appendChild(typing);
+    scrollChat();
 
-    setTimeout(function() {
-      showTyping(function() {
-        addMessage('jacob', node.jacob);
-
-        if (node.isEnd) {
-          setTimeout(function() { showContactCard(); }, 400);
-        } else {
-          setTimeout(function() { showChatOptions(node.options); }, 350);
-        }
-      });
-    }, 350);
+    fetch(CHAT_API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ messages: conversationHistory })
+    })
+    .then(function(res) {
+      if (!res.ok) throw new Error('API error');
+      return res.json();
+    })
+    .then(function(data) {
+      typing.remove();
+      var reply = data.reply || "Something glitched on my end. Try again or just email me at jacobcharendoff@gmail.com.";
+      addMessage('jacob', reply);
+      conversationHistory.push({ role: 'assistant', content: reply });
+      chatLocked = false;
+      chatInput.disabled = false;
+      chatSend.disabled = false;
+      chatInput.focus();
+      var followUps = followUpSets[followUpIndex % followUpSets.length];
+      followUpIndex++;
+      setTimeout(function() { showSuggestions(followUps); }, 500);
+    })
+    .catch(function(err) {
+      typing.remove();
+      addMessage('jacob', "Connection hiccup. Try again, or reach me directly at jacobcharendoff@gmail.com or (647) 680-2324.");
+      chatLocked = false;
+      chatInput.disabled = false;
+      chatSend.disabled = false;
+      chatInput.focus();
+    });
   }, 100);
 }
 
@@ -1135,60 +1133,10 @@ function showContactCard() {
   scrollChat();
 }
 
-// ======================================
-// DYNAMIC AI CHAT (Claude-powered)
-// ======================================
-var CHAT_API_URL = 'https://portfolio-chat-api-flax.vercel.app/api/chat';
-var conversationHistory = [];
-var chatLocked = false;
-
 function handleFreeformInput() {
   var text = chatInput.value.trim();
-  if (!text || chatLocked) return;
-
-  chatLocked = true;
-  chatInput.value = '';
-  chatInput.disabled = true;
-  chatSend.disabled = true;
-  chatOptions.classList.remove('visible');
-  chatOptions.innerHTML = '';
-
-  addMessage('visitor', text);
-  conversationHistory.push({ role: 'user', content: text });
-
-  var typing = document.createElement('div');
-  typing.className = 'chat-bubble chat-jacob typing-bubble';
-  typing.innerHTML = '<div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>';
-  chatThread.appendChild(typing);
-  scrollChat();
-
-  fetch(CHAT_API_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ messages: conversationHistory })
-  })
-  .then(function(res) {
-    if (!res.ok) throw new Error('API error');
-    return res.json();
-  })
-  .then(function(data) {
-    typing.remove();
-    var reply = data.reply || "Something glitched on my end. Try again or just email me at jacobcharendoff@gmail.com.";
-    addMessage('jacob', reply);
-    conversationHistory.push({ role: 'assistant', content: reply });
-    chatLocked = false;
-    chatInput.disabled = false;
-    chatSend.disabled = false;
-    chatInput.focus();
-  })
-  .catch(function(err) {
-    typing.remove();
-    addMessage('jacob', "Connection hiccup. Try again, or reach me directly at jacobcharendoff@gmail.com or (647) 680-2324.");
-    chatLocked = false;
-    chatInput.disabled = false;
-    chatSend.disabled = false;
-    chatInput.focus();
-  });
+  if (!text) return;
+  sendChatMessage(text);
 }
 
 chatSend.addEventListener('click', handleFreeformInput);
@@ -1204,11 +1152,8 @@ chatInput.addEventListener('keydown', function(e) {
   e.stopPropagation();
 });
 
-// ======================================
-// DEPTH TOGGLE
-// ======================================
 function toggleDepth() {
-  var s = slides[current];
+  const s = slides[current];
   if (!s.detail) return;
 
   depthOpen = !depthOpen;
@@ -1218,58 +1163,66 @@ function toggleDepth() {
     depthPromptText.textContent = 'Collapse';
     depthIndicator.classList.add('show');
 
-    var html = '<div class="detail-grid">';
-    s.detail.cells.forEach(function(c) {
-      html += '<div class="detail-cell">' +
-        '<div class="detail-cell-label" style="color:' + c.color + '">' + c.label + '</div>' +
-        '<div class="detail-cell-text">' + c.text + '</div>' +
-      '</div>';
+    let html = '<div class="detail-grid">';
+    s.detail.cells.forEach(c => {
+      html += `<div class="detail-cell">
+        <div class="detail-cell-label" style="color:${c.color}">${c.label}</div>
+        <div class="detail-cell-text">${c.text}</div>
+      </div>`;
     });
     html += '</div>';
 
     if (s.detail.ba && s.detail.ba.length) {
       html += '<div class="detail-ba">';
-      s.detail.ba.forEach(function(b) {
-        html += '<div class="ba-item">' +
-          '<div class="ba-before">' + b.before + '</div>' +
-          '<div class="ba-after" style="color:' + s.color + '">' + b.after + '</div>' +
-          '<div class="ba-label">' + b.label + '</div>' +
-        '</div>';
+      s.detail.ba.forEach(b => {
+        html += `<div class="ba-item">
+          <div class="ba-before">${b.before}</div>
+          <div class="ba-after" style="color:${s.color}">${b.after}</div>
+          <div class="ba-label">${b.label}</div>
+        </div>`;
       });
       html += '</div>';
     }
 
     detail.innerHTML = html;
-    requestAnimationFrame(function() { detail.classList.add('open'); });
+    requestAnimationFrame(() => detail.classList.add('open'));
   } else {
     depthPrompt.classList.remove('expanded');
     depthPromptText.textContent = 'Go deeper';
     depthIndicator.classList.remove('show');
     detail.classList.remove('open');
-    setTimeout(function() { detail.innerHTML = ''; }, 400);
+    setTimeout(() => { detail.innerHTML = ''; }, 400);
   }
 }
 
-// ══════════════════════════════════════
-// NAVIGATION
-// ══════════════════════════════════════
 function goTo(index) {
   if (transitioning || index === current || index < 0 || index >= slides.length) return;
   current = index;
+  document.getElementById('stage').scrollTop = 0;
   render(current);
 }
 
 function next() { goTo(current + 1); }
 function prev() { goTo(current - 1); }
 
-window.addEventListener('wheel', function(e) {
+window.addEventListener('wheel', (e) => {
   if (chatActive || transitioning) return;
+
+  var stageEl = document.getElementById('stage');
+  var hasInternalScroll = stageEl.scrollHeight > stageEl.clientHeight + 2;
+  if (hasInternalScroll) {
+    var atBottom = stageEl.scrollTop + stageEl.clientHeight >= stageEl.scrollHeight - 8;
+    var atTop = stageEl.scrollTop <= 8;
+    if (e.deltaY > 0 && !atBottom) { scrollAccum = 0; return; }
+    if (e.deltaY < 0 && !atTop) { scrollAccum = 0; return; }
+  }
+
   scrollAccum += e.deltaY;
 
   clearTimeout(scrollTimer);
-  scrollTimer = setTimeout(function() { scrollAccum = 0; }, 200);
+  scrollTimer = setTimeout(() => { scrollAccum = 0; }, 200);
 
-  var threshold = 80;
+  const threshold = 80;
   if (Math.abs(scrollAccum) >= threshold) {
     if (depthOpen && scrollAccum < 0) {
       toggleDepth();
@@ -1282,7 +1235,7 @@ window.addEventListener('wheel', function(e) {
   }
 }, { passive: true });
 
-window.addEventListener('keydown', function(e) {
+window.addEventListener('keydown', (e) => {
   if (chatActive) return;
   if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === ' ') {
     e.preventDefault();
@@ -1300,28 +1253,34 @@ window.addEventListener('keydown', function(e) {
   }
 });
 
-progressTrack.addEventListener('click', function(e) {
-  var rect = progressTrack.getBoundingClientRect();
-  var pct = (e.clientX - rect.left) / rect.width;
-  var target = Math.round(pct * (slides.length - 1));
+progressTrack.addEventListener('click', (e) => {
+  const rect = progressTrack.getBoundingClientRect();
+  const pct = (e.clientX - rect.left) / rect.width;
+  const target = Math.round(pct * (slides.length - 1));
   goTo(target);
 });
 
-var touchStartY = 0;
-window.addEventListener('touchstart', function(e) { touchStartY = e.touches[0].clientY; }, { passive: true });
-window.addEventListener('touchend', function(e) {
+let touchStartY = 0;
+window.addEventListener('touchstart', (e) => { touchStartY = e.touches[0].clientY; }, { passive: true });
+window.addEventListener('touchend', (e) => {
   if (chatActive) return;
+  var stageEl = document.getElementById('stage');
+  var hasInternalScroll = stageEl.scrollHeight > stageEl.clientHeight + 2;
+  if (hasInternalScroll) {
+    var atBottom = stageEl.scrollTop + stageEl.clientHeight >= stageEl.scrollHeight - 8;
+    var atTop = stageEl.scrollTop <= 8;
+    var dy = touchStartY - e.changedTouches[0].clientY;
+    if (dy > 0 && !atBottom) return;
+    if (dy < 0 && !atTop) return;
+  }
   var dy = touchStartY - e.changedTouches[0].clientY;
   if (Math.abs(dy) > 40) {
     if (dy > 0) next(); else prev();
   }
 }, { passive: true });
 
-// ══════════════════════════════════════
-// SCROLL INDICATOR + CHAT FLOAT VISIBILITY
-// ══════════════════════════════════════
-var scrollIndicator = document.getElementById('scrollIndicator');
-var chatFloat = document.getElementById('chatFloat');
+const scrollIndicator = document.getElementById('scrollIndicator');
+const chatFloat = document.getElementById('chatFloat');
 
 function updateOverlays() {
   if (current === 0) {
@@ -1329,7 +1288,7 @@ function updateOverlays() {
   } else {
     scrollIndicator.classList.add('hidden');
   }
-  var chatSlideIndex = slides.length - 1;
+  const chatSlideIndex = slides.length - 1;
   if (current >= 2 && current !== chatSlideIndex) {
     chatFloat.classList.add('visible');
   } else {
@@ -1337,37 +1296,34 @@ function updateOverlays() {
   }
 }
 
-// ══════════════════════════════════════
-// ENTRANCE ANIMATION
-// ══════════════════════════════════════
 function playEntrance() {
   eyebrow.classList.add('entrance-eyebrow');
   headline.classList.add('entrance-headline');
+  document.getElementById('contactRow').classList.add('entrance-contact');
   desc.classList.add('entrance-desc');
   nums.classList.add('entrance-nums');
+  document.getElementById('navCards').classList.add('entrance-nav');
   depthPrompt.classList.add('entrance-depth');
 }
 
-// ══════════════════════════════════════
-// TOUCH FEEDBACK (drag-follow effect)
-// ══════════════════════════════════════
-var touchStartX = 0;
-var touchDragActive = false;
-window.addEventListener('touchmove', function(e) {
+let touchStartX = 0;
+let touchDragActive = false;
+window.addEventListener('touchmove', (e) => {
   if (chatActive || transitioning) return;
-  var dy = touchStartY - e.touches[0].clientY;
+  const dy = touchStartY - e.touches[0].clientY;
   if (Math.abs(dy) > 10 && !touchDragActive) {
     touchDragActive = true;
     content.classList.add('touch-dragging');
   }
   if (touchDragActive) {
-    var clampedDy = Math.max(-40, Math.min(40, dy * 0.3));
+    const clampedDy = Math.max(-40, Math.min(40, dy * 0.3));
     content.style.transform = 'translateY(' + (-clampedDy) + 'px)';
     content.style.opacity = 1 - Math.abs(clampedDy) / 120;
   }
 }, { passive: true });
 
-window.addEventListener('touchend', function(e) {
+const origTouchEnd = window.ontouchend;
+window.addEventListener('touchend', (e) => {
   if (touchDragActive) {
     touchDragActive = false;
     content.classList.remove('touch-dragging');
@@ -1376,23 +1332,17 @@ window.addEventListener('touchend', function(e) {
   }
 }, { passive: true });
 
-// ══════════════════════════════════════
-// COMPACT NAV DOTS ON SMALL SCREENS
-// ══════════════════════════════════════
 function applyCompactDots() {
   if (window.innerWidth <= 400) {
-    document.querySelectorAll('.chapter-dot').forEach(function(d) {
-      var idx = parseInt(d.dataset.index);
-      var s = slides[idx];
+    document.querySelectorAll('.chapter-dot').forEach(d => {
+      const idx = parseInt(d.dataset.index);
+      const s = slides[idx];
       if (s.type === 'chapter') d.classList.add('compact-hide');
     });
   }
 }
 applyCompactDots();
 
-// ══════════════════════════════════════
-// INIT
-// ══════════════════════════════════════
 render(0, false);
 updateOverlays();
 setTimeout(playEntrance, 100);
